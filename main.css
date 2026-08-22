@@ -1,0 +1,411 @@
+/* =============================================
+   BREW HEAVEN — Full Stylesheet
+   ============================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&display=swap');
+
+/* ── Base Reset ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background-color: #fbf9f5;
+  color: #1b1c1a;
+  overflow-x: hidden;
+}
+
+/* ── Hero Gradient ── */
+.hero-gradient {
+  background: linear-gradient(
+    135deg,
+    rgba(39, 19, 16, 0.72) 0%,
+    rgba(39, 19, 16, 0.45) 50%,
+    rgba(39, 19, 16, 0.15) 100%
+  );
+}
+
+/* ── Toast Notification ── */
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 9999;
+  background: #271310;
+  color: #fff;
+  padding: 1rem 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 600;
+  font-size: 0.875rem;
+  transform: translateY(120%);
+  opacity: 0;
+  transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s ease;
+  pointer-events: none;
+  max-width: 340px;
+}
+
+.toast.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.toast .material-symbols-outlined {
+  font-size: 20px;
+  color: #b0cdbb;
+  flex-shrink: 0;
+}
+
+/* ── Cart Sidebar ── */
+.cart-sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 380px;
+  max-width: 100vw;
+  height: 100vh;
+  background: #fbf9f5;
+  z-index: 200;
+  box-shadow: -20px 0 60px rgba(39,19,16,0.15);
+  display: flex;
+  flex-direction: column;
+  transform: translateX(110%);
+  transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+
+.cart-sidebar.open {
+  transform: translateX(0);
+}
+
+.cart-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(39,19,16,0.3);
+  backdrop-filter: blur(4px);
+  z-index: 199;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.cart-overlay.visible {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.cart-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid #d3c3c0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cart-items-container {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: #f5f3ef;
+  border-radius: 1rem;
+  margin-bottom: 0.75rem;
+  transition: transform 0.2s ease;
+}
+
+.cart-item:hover {
+  transform: translateX(-4px);
+}
+
+.cart-item img {
+  width: 60px;
+  height: 60px;
+  border-radius: 0.75rem;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.cart-item-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.cart-item-name {
+  font-weight: 700;
+  font-size: 0.875rem;
+  color: #271310;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cart-item-price {
+  font-size: 0.8125rem;
+  color: #496455;
+  font-weight: 600;
+}
+
+.cart-qty-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cart-qty-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid #d3c3c0;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+  color: #271310;
+  transition: background 0.2s, border-color 0.2s;
+  line-height: 1;
+}
+
+.cart-qty-btn:hover {
+  background: #271310;
+  color: #fff;
+  border-color: #271310;
+}
+
+.cart-qty-val {
+  font-weight: 700;
+  font-size: 0.875rem;
+  min-width: 20px;
+  text-align: center;
+  color: #271310;
+}
+
+.cart-footer {
+  padding: 1.5rem;
+  border-top: 1px solid #d3c3c0;
+  background: #fbf9f5;
+}
+
+.cart-total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+}
+
+.cart-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 1rem;
+  color: #827472;
+}
+
+/* ── Menu Page Filters ── */
+.filter-chip {
+  padding: 0.5rem 1.25rem;
+  border-radius: 9999px;
+  border: 1.5px solid #d3c3c0;
+  background: transparent;
+  color: #504442;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+}
+
+.filter-chip:hover,
+.filter-chip.active {
+  background: #271310;
+  color: #fff;
+  border-color: #271310;
+}
+
+/* ── Menu Card ── */
+.menu-card {
+  background: #f5f3ef;
+  border-radius: 1rem;
+  overflow: hidden;
+  transition: transform 0.35s cubic-bezier(0.4,0,0.2,1), box-shadow 0.35s ease;
+  position: relative;
+}
+
+.menu-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 32px 64px -12px rgba(62,39,35,0.18);
+}
+
+.menu-card img {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.4,0,0.2,1);
+}
+
+.menu-card:hover img {
+  transform: scale(1.07);
+}
+
+.menu-card .img-wrap {
+  overflow: hidden;
+  position: relative;
+}
+
+/* ── About Page Timeline ── */
+.timeline-item {
+  display: flex;
+  gap: 1.5rem;
+  padding-bottom: 2.5rem;
+  position: relative;
+}
+
+.timeline-item:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 19px;
+  top: 44px;
+  width: 2px;
+  height: calc(100% - 24px);
+  background: linear-gradient(to bottom, #496455, transparent);
+}
+
+.timeline-dot {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #271310;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Careers Page ── */
+.job-card {
+  background: #f5f3ef;
+  border: 1.5px solid transparent;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.job-card:hover,
+.job-card.selected {
+  border-color: #496455;
+  box-shadow: 0 8px 24px rgba(73,100,85,0.12);
+  transform: translateX(4px);
+}
+
+.job-card.selected {
+  background: #f0f7f4;
+}
+
+/* ── Contact Map Placeholder ── */
+.map-placeholder {
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: linear-gradient(135deg, #efeeea 0%, #e4e2de 100%);
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.75rem;
+  color: #827472;
+  border: 2px dashed #d3c3c0;
+}
+
+/* ── Star Rating ── */
+.stars {
+  display: flex;
+  gap: 2px;
+}
+
+.star {
+  color: #b8860b;
+  font-size: 18px;
+}
+
+/* ── Scroll Animation ── */
+.fade-up {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.65s ease, transform 0.65s cubic-bezier(0.34,1.56,0.64,1);
+}
+
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fade-up-delay-1 { transition-delay: 0.1s; }
+.fade-up-delay-2 { transition-delay: 0.2s; }
+.fade-up-delay-3 { transition-delay: 0.3s; }
+.fade-up-delay-4 { transition-delay: 0.4s; }
+
+/* ── Page Hero ── */
+.page-hero {
+  background: linear-gradient(135deg, #271310 0%, #3e2723 60%, #4a3330 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.page-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Ccircle cx='30' cy='30' r='20'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* ── Drawer Transition ── */
+#drawer > div:last-child {
+  transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+
+/* ── Form Focus Glow ── */
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(73,100,85,0.15);
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #d3c3c0; border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: #827472; }
+
+/* ── Utility ── */
+.text-shadow-sm {
+  text-shadow: 0 2px 12px rgba(0,0,0,0.3);
+}
+
+@media (max-width: 768px) {
+  .cart-sidebar { width: 100vw; }
+}

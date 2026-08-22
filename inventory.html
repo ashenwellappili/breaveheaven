@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Secure Brew Heaven Staff Portal for inventory management, stock level control, and operations tracking."/>
+  <title>Staff Portal | Brew Heaven</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="main.css">
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode:"class",
+      theme:{ extend:{ colors:{ "surface-container-lowest":"#ffffff","secondary":"#496455","primary-fixed-dim":"#e3beb8","on-tertiary-fixed-variant":"#4c4542","on-secondary-fixed":"#062014","on-secondary-fixed-variant":"#324c3e","error-container":"#ffdad6","inverse-surface":"#30312e","surface-dim":"#dbdad6","on-tertiary":"#ffffff","on-error-container":"#93000a","on-primary":"#ffffff","surface-container":"#efeeea","outline":"#827472","tertiary":"#1d1815","secondary-fixed-dim":"#b0cdbb","surface-bright":"#fbf9f5","primary-container":"#3e2723","on-secondary":"#ffffff","on-tertiary-container":"#9c938f","surface-tint":"#745853","secondary-container":"#ccead6","surface-container-highest":"#e4e2de","tertiary-fixed":"#ece0dc","on-error":"#ffffff","tertiary-container":"#322c29","secondary-fixed":"#ccead6","inverse-on-surface":"#f2f0ed","surface-variant":"#e4e2de","surface-container-high":"#eae8e4","on-secondary-container":"#4f6a5b","on-surface":"#1b1c1a","on-surface-variant":"#504442","on-primary-fixed-variant":"#5b403c","tertiary-fixed-dim":"#cfc4c0","on-tertiary-fixed":"#201a18","on-background":"#1b1c1a","on-primary-container":"#ae8d87","outline-variant":"#d3c3c0","on-primary-fixed":"#2b1613","surface-container-low":"#f5f3ef","surface":"#fbf9f5","background":"#fbf9f5","primary":"#271310","error":"#ba1a1a","inverse-primary":"#e3beb8","primary-fixed":"#ffdad4" },
+      borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},
+      spacing:{"container-max":"1200px","base":"8px","gutter":"24px","margin-mobile":"20px","margin-desktop":"64px"},
+      fontFamily:{"label-sm":["Plus Jakarta Sans"],"body-md":["Plus Jakarta Sans"],"headline-md":["Source Serif 4"],"headline-xl-mobile":["Source Serif 4"],"headline-xl":["Source Serif 4"],"headline-lg":["Source Serif 4"],"body-lg":["Plus Jakarta Sans"]},
+      fontSize:{ "label-sm":["12px",{"lineHeight":"16px","letterSpacing":"0.05em","fontWeight":"600"}],"body-md":["16px",{"lineHeight":"24px","fontWeight":"400"}],"headline-md":["24px",{"lineHeight":"32px","fontWeight":"600"}],"headline-xl-mobile":["32px",{"lineHeight":"40px","letterSpacing":"-0.01em","fontWeight":"700"}],"headline-xl":["48px",{"lineHeight":"56px","letterSpacing":"-0.02em","fontWeight":"700"}],"headline-lg":["32px",{"lineHeight":"40px","fontWeight":"600"}],"body-lg":["18px",{"lineHeight":"28px","fontWeight":"400"}] } } }
+    }
+  </script>
+  <style>
+    .status-badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .status-good {
+      background: #ccead6;
+      color: #062014;
+    }
+    .status-warning {
+      background: #fff3cd;
+      color: #856404;
+    }
+    .status-critical {
+      background: #ffdad6;
+      color: #93000a;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(39, 19, 16, 0.4);
+      backdrop-filter: blur(4px);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal.show {
+      display: flex;
+    }
+  </style>
+</head>
+<body class="font-body-md text-body-md overflow-x-hidden bg-background text-on-background">
+
+  <!-- HEADER -->
+  <header class="fixed top-0 w-full bg-surface/90 backdrop-blur-md shadow-[0_32px_64px_-12px_rgba(62,39,35,0.08)] z-50 transition-colors duration-300">
+    <div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop h-16 w-full max-w-[1440px] mx-auto">
+      <div class="flex items-center gap-3 cursor-pointer" onclick="window.location.href='index.html'">
+        <span class="material-symbols-outlined text-primary">coffee</span>
+        <span class="font-headline-md text-headline-md text-primary tracking-tight">Brew Heaven</span>
+      </div>
+      <nav class="hidden md:flex gap-8 items-center">
+        <a class="text-on-surface-variant hover:text-secondary transition-colors duration-200" href="index.html">Home</a>
+        <a class="text-on-surface-variant hover:text-secondary transition-colors duration-200" href="menu.html">Menu</a>
+        <a class="text-on-surface-variant hover:text-secondary transition-colors duration-200" href="about.html">About Us</a>
+        <a class="text-on-surface-variant hover:text-secondary transition-colors duration-200" href="careers.html">Careers</a>
+        <a class="text-on-surface-variant hover:text-secondary transition-colors duration-200" href="contact.html">Contact Us</a>
+        <a class="font-bold text-primary border-b-2 border-primary" href="inventory.html">Staff Portal</a>
+      </nav>
+      <div class="flex items-center gap-3">
+        <button id="cart-btn" onclick="openCart()" class="relative p-2 text-primary hover:text-secondary transition-colors" aria-label="Open cart">
+          <span class="material-symbols-outlined">shopping_bag</span>
+          <span id="global-cart-count" class="absolute -top-1 -right-1 bg-secondary text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center hidden">0</span>
+        </button>
+        <button class="text-primary md:hidden" onclick="toggleDrawer()" aria-label="Open menu">
+          <span class="material-symbols-outlined">menu</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE DRAWER -->
+  <div class="fixed inset-0 z-[60] hidden" id="drawer">
+    <div class="absolute inset-0 bg-primary/20 backdrop-blur-sm" onclick="toggleDrawer()"></div>
+    <div class="fixed inset-y-0 right-0 z-[60] flex flex-col py-6 h-full w-80 bg-surface-bright shadow-2xl">
+      <div class="px-6 mb-8 flex justify-between items-center">
+        <span class="font-headline-md text-primary">Brew Heaven</span>
+        <button onclick="toggleDrawer()"><span class="material-symbols-outlined">close</span></button>
+      </div>
+      <div class="flex flex-col gap-1">
+        <a class="text-on-surface-variant px-4 py-3 mx-2 hover:bg-surface-container-highest rounded-full flex items-center gap-4 transition-colors" href="index.html"><span class="material-symbols-outlined">home</span> Home</a>
+        <a class="text-on-surface-variant px-4 py-3 mx-2 hover:bg-surface-container-highest rounded-full flex items-center gap-4 transition-colors" href="menu.html"><span class="material-symbols-outlined">restaurant_menu</span> Menu</a>
+        <a class="text-on-surface-variant px-4 py-3 mx-2 hover:bg-surface-container-highest rounded-full flex items-center gap-4 transition-colors" href="about.html"><span class="material-symbols-outlined">local_cafe</span> About Us</a>
+        <a class="text-on-surface-variant px-4 py-3 mx-2 hover:bg-surface-container-highest rounded-full flex items-center gap-4 transition-colors" href="careers.html"><span class="material-symbols-outlined">work</span> Careers</a>
+        <a class="text-on-surface-variant px-4 py-3 mx-2 hover:bg-surface-container-highest rounded-full flex items-center gap-4 transition-colors" href="contact.html"><span class="material-symbols-outlined">contact_support</span> Contact Us</a>
+        <a class="bg-secondary-container text-on-secondary-container rounded-full mx-2 font-body-lg px-4 py-3 flex items-center gap-4" href="inventory.html"><span class="material-symbols-outlined">badge</span> Staff Portal</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- CART SIDEBAR -->
+  <div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
+  <aside class="cart-sidebar" id="cart-sidebar" aria-label="Shopping Cart">
+    <div class="cart-header">
+      <div>
+        <h2 class="font-headline-md text-headline-md text-primary">Your Order</h2>
+        <p id="cart-item-count-label" class="text-sm text-on-surface-variant">0 items</p>
+      </div>
+      <button onclick="closeCart()" class="p-2 rounded-full hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-primary">close</span></button>
+    </div>
+    <div class="cart-items-container" id="cart-items-container">
+      <div class="cart-empty-state" id="cart-empty-state">
+        <span class="material-symbols-outlined text-5xl opacity-30">shopping_bag</span>
+        <p class="text-sm font-semibold">Your cart is empty</p>
+        <p class="text-xs text-center max-w-[200px]">Add items from our menu to get started</p>
+        <a href="menu.html" onclick="closeCart()" class="mt-2 text-secondary font-bold text-sm hover:underline">Browse Menu →</a>
+      </div>
+    </div>
+    <div class="cart-footer" id="cart-footer" style="display:none">
+      <div class="cart-total-row">
+        <span class="font-bold text-primary text-lg">Total</span>
+        <span class="font-headline-md text-primary" id="cart-total-price">LKR 0.00</span>
+      </div>
+      <button onclick="handleCheckout()" class="w-full bg-primary hover:bg-secondary text-white font-bold py-4 rounded-full transition-all shadow-md">
+        Proceed to Checkout
+      </button>
+      <button onclick="clearCart()" class="w-full mt-2 text-on-surface-variant text-sm font-semibold py-2 hover:text-error transition-colors">Clear cart</button>
+    </div>
+  </aside>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast">
+    <span class="material-symbols-outlined">check_circle</span>
+    <span id="toast-msg">Added!</span>
+  </div>
+
+  <main class="pt-16">
+
+    <!-- PAGE HERO -->
+    <section class="page-hero py-24 px-margin-mobile md:px-margin-desktop text-center relative">
+      <div class="relative z-10 max-w-[1440px] mx-auto">
+        <p class="text-white/50 font-semibold text-sm tracking-widest uppercase mb-3">Brew Heaven Operations</p>
+        <h1 class="font-headline-xl text-headline-xl-mobile md:text-headline-xl text-white mb-4">Staff Hub & Inventory</h1>
+        <p class="text-white/70 font-body-lg max-w-xl mx-auto">Secure portal for staff members to manage ingredients, monitor stock, and review analytics.</p>
+      </div>
+    </section>
+
+    <!-- AUTHENTICATION FORM VIEW -->
+    <section id="authView" class="max-w-[1440px] mx-auto px-margin-mobile md:px-margin-desktop py-20 flex justify-center">
+      <div class="bg-white p-8 md:p-10 rounded-2xl shadow-xl border border-primary/5 w-full max-w-md">
+        <h2 class="font-headline-lg text-primary text-center mb-2">Staff Login</h2>
+        <p class="text-center text-on-surface-variant text-sm mb-8">Access the Brew Heaven back-office dashboard.</p>
+        
+        <form id="loginForm" class="space-y-6">
+          <div>
+            <label for="staffId" class="block text-sm font-semibold text-primary mb-2">Staff ID</label>
+            <input type="text" id="staffId" placeholder="e.g. STAFF001" required class="w-full bg-surface-container-low border border-outline-variant focus:border-secondary rounded-xl p-3 outline-none transition-all"/>
+          </div>
+          <div>
+            <label for="password" class="block text-sm font-semibold text-primary mb-2">PIN (4 digits)</label>
+            <input type="password" id="password" placeholder="••••" maxlength="4" required class="w-full bg-surface-container-low border border-outline-variant focus:border-secondary rounded-xl p-3 outline-none transition-all text-center tracking-widest text-lg"/>
+            <p class="text-xs text-on-surface-variant/60 mt-2">Demo credentials: ID: <span class="font-mono font-bold text-secondary">STAFF001</span>, PIN: <span class="font-mono font-bold text-secondary">1994</span></p>
+          </div>
+          <button type="submit" class="w-full bg-primary hover:bg-secondary text-white font-bold py-4 rounded-full transition-all shadow-md flex items-center justify-center gap-2">
+            <span class="material-symbols-outlined text-[18px]">lock_open</span>
+            Log In
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- DASHBOARD VIEW (HIDDEN BY DEFAULT) -->
+    <section id="dashboardView" class="hidden max-w-[1440px] mx-auto px-margin-mobile md:px-margin-desktop py-16">
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-10 pb-6 border-b border-primary/10">
+        <div>
+          <h2 class="font-headline-lg text-primary">Operations Dashboard</h2>
+          <p class="text-on-surface-variant text-sm">Welcome back, <span class="font-bold text-secondary">STAFF001</span></p>
+        </div>
+        <button onclick="logout()" class="bg-red-50 text-red-600 hover:bg-red-100 px-6 py-3 rounded-full font-bold text-sm transition-all flex items-center gap-2">
+          <span class="material-symbols-outlined text-sm">logout</span> Logout
+        </button>
+      </div>
+
+      <!-- Analytics Stats Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-secondary flex flex-col justify-between">
+          <span class="text-xs text-on-surface-variant/60 font-semibold tracking-wider uppercase">Today's Sales</span>
+          <span class="text-3xl font-bold text-primary my-2">Rs. 45,600</span>
+          <span class="text-xs text-green-600 font-semibold flex items-center gap-1">
+            <span class="material-symbols-outlined text-sm">trending_up</span> ↑ 12% from yesterday
+          </span>
+        </div>
+        <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-secondary flex flex-col justify-between">
+          <span class="text-xs text-on-surface-variant/60 font-semibold tracking-wider uppercase">Items in Stock</span>
+          <span class="text-3xl font-bold text-primary my-2" id="stat-total-stock">28</span>
+          <span class="text-xs text-red-600 font-semibold flex items-center gap-1" id="stat-low-stock-count">
+            <span class="material-symbols-outlined text-sm font-bold">warning</span> 2 items low on stock
+          </span>
+        </div>
+        <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-secondary flex flex-col justify-between">
+          <span class="text-xs text-on-surface-variant/60 font-semibold tracking-wider uppercase">Orders Today</span>
+          <span class="text-3xl font-bold text-primary my-2">124</span>
+          <span class="text-xs text-green-600 font-semibold flex items-center gap-1">
+            <span class="material-symbols-outlined text-sm">trending_up</span> ↑ 8% from average
+          </span>
+        </div>
+        <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-secondary flex flex-col justify-between">
+          <span class="text-xs text-on-surface-variant/60 font-semibold tracking-wider uppercase">Active Staff</span>
+          <span class="text-3xl font-bold text-primary my-2">8</span>
+          <span class="text-xs text-on-surface-variant/60 font-semibold flex items-center gap-1">
+            <span class="material-symbols-outlined text-sm">coffee</span> 2 currently on break
+          </span>
+        </div>
+      </div>
+
+      <!-- MAIN INVENTORY SECTION -->
+      <div class="bg-white rounded-2xl border border-primary/5 shadow-sm p-6 md:p-8 mb-10">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8 pb-4 border-b border-surface-container">
+          <h3 class="font-headline-md text-primary">Product Inventory</h3>
+          <div class="flex gap-2">
+            <button onclick="openAddProductModal()" class="bg-secondary text-white hover:bg-secondary/90 px-5 py-3 rounded-full font-bold text-sm flex items-center gap-2 shadow-sm transition-all">
+              <span class="material-symbols-outlined text-sm">add</span> Add Product
+            </button>
+            <button onclick="refreshInventory()" class="border border-outline-variant hover:bg-surface-container px-5 py-3 rounded-full font-bold text-sm text-primary flex items-center gap-2 transition-all">
+              <span class="material-symbols-outlined text-sm">refresh</span> Refresh
+            </button>
+          </div>
+        </div>
+
+        <div class="relative w-full max-w-md mb-6">
+          <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+          <input type="text" id="searchInput" placeholder="Search products..." onkeyup="filterInventory()" class="w-full bg-surface-container-low border border-outline-variant rounded-full pl-11 pr-5 py-3 outline-none focus:border-secondary transition-all"/>
+        </div>
+
+        <!-- Inventory Table -->
+        <div class="overflow-x-auto w-full">
+          <table class="w-full text-left border-collapse min-w-[700px]">
+            <thead>
+              <tr class="border-b border-primary/10">
+                <th class="py-4 px-4 text-xs font-bold tracking-wider uppercase text-primary">Product Name</th>
+                <th class="py-4 px-4 text-xs font-bold tracking-wider uppercase text-primary">Category</th>
+                <th class="py-4 px-4 text-xs font-bold tracking-wider uppercase text-primary">Current Stock</th>
+                <th class="py-4 px-4 text-xs font-bold tracking-wider uppercase text-primary">Unit</th>
+                <th class="py-4 px-4 text-xs font-bold tracking-wider uppercase text-primary">Status</th>
+                <th class="py-4 px-4 text-xs font-bold tracking-wider uppercase text-primary">Last Updated</th>
+                <th class="py-4 px-4 text-xs font-bold tracking-wider uppercase text-primary text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="inventoryTableBody" class="divide-y divide-surface-container">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- LOW STOCK ALERT PANEL -->
+      <div class="bg-white rounded-2xl border border-primary/5 shadow-sm p-6 md:p-8">
+        <div class="flex justify-between items-center mb-6 pb-4 border-b border-surface-container">
+          <h3 class="font-headline-md text-primary flex items-center gap-2">
+            <span class="material-symbols-outlined text-red-600">warning</span> Low Stock Alerts
+          </h3>
+          <button onclick="orderSupplies()" class="bg-primary hover:bg-secondary text-white px-5 py-3 rounded-full font-bold text-sm flex items-center gap-2 transition-all shadow-sm">
+            <span class="material-symbols-outlined text-sm">shopping_cart</span> Order Supplies
+          </button>
+        </div>
+
+        <div class="overflow-x-auto w-full">
+          <table class="w-full text-left border-collapse min-w-[600px]">
+            <thead>
+              <tr class="border-b border-primary/10">
+                <th class="py-4 px-4 text-xs font-bold tracking-wider uppercase text-primary">Product</th>
+                <th class="py-4 px-4 text-xs font-bold tracking-wider uppercase text-primary">Current Stock</th>
+                <th class="py-4 px-4 text-xs font-bold tracking-wider uppercase text-primary">Minimum Level</th>
+                <th class="py-4 px-4 text-xs font-bold tracking-wider uppercase text-primary">Supplier</th>
+                <th class="py-4 px-4 text-xs font-bold tracking-wider uppercase text-primary text-right">Action</th>
+              </tr>
+            </thead>
+            <tbody id="lowStockTableBody" class="divide-y divide-surface-container">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ADD / EDIT PRODUCT MODAL -->
+  <div id="productModal" class="modal">
+    <div class="bg-white rounded-2xl p-6 md:p-8 max-w-lg w-full shadow-2xl relative border border-primary/5">
+      <button onclick="closeModal('productModal')" class="absolute top-4 right-4 p-2 hover:bg-surface-container rounded-full text-on-surface-variant flex items-center justify-center">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+      <h3 id="modalTitle" class="font-headline-md text-primary mb-6">Add New Product</h3>
+      
+      <form id="productForm" class="space-y-4">
+        <input type="hidden" id="productId">
+        
+        <div>
+          <label class="block text-xs font-semibold text-primary mb-1.5">Product Name *</label>
+          <input type="text" id="productName" placeholder="e.g. Colombian Roast" required class="w-full bg-surface-container-low border border-outline-variant focus:border-secondary rounded-xl p-3 outline-none transition-all text-sm"/>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-primary mb-1.5">Category *</label>
+            <select id="productCategory" required class="w-full bg-surface-container-low border border-outline-variant focus:border-secondary rounded-xl p-3 outline-none transition-all text-sm">
+              <option value="">Select Category</option>
+              <option value="Coffee Beans">Coffee Beans</option>
+              <option value="Equipment">Equipment</option>
+              <option value="Milk & Dairy">Milk & Dairy</option>
+              <option value="Pastries">Pastries</option>
+              <option value="Supplies">Supplies</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-primary mb-1.5">Supplier Name *</label>
+            <input type="text" id="productSupplier" placeholder="e.g. Valley Farms" required class="w-full bg-surface-container-low border border-outline-variant focus:border-secondary rounded-xl p-3 outline-none transition-all text-sm"/>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-4">
+          <div class="col-span-1">
+            <label class="block text-xs font-semibold text-primary mb-1.5">Stock *</label>
+            <input type="number" id="productStock" placeholder="50" required class="w-full bg-surface-container-low border border-outline-variant focus:border-secondary rounded-xl p-3 outline-none transition-all text-sm"/>
+          </div>
+          <div class="col-span-1">
+            <label class="block text-xs font-semibold text-primary mb-1.5">Unit *</label>
+            <input type="text" id="productUnit" placeholder="kg, L, boxes" required class="w-full bg-surface-container-low border border-outline-variant focus:border-secondary rounded-xl p-3 outline-none transition-all text-sm"/>
+          </div>
+          <div class="col-span-1">
+            <label class="block text-xs font-semibold text-primary mb-1.5">Min level *</label>
+            <input type="number" id="productMinimum" placeholder="10" required class="w-full bg-surface-container-low border border-outline-variant focus:border-secondary rounded-xl p-3 outline-none transition-all text-sm"/>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-primary mb-1.5">Notes</label>
+          <textarea id="productNotes" placeholder="Additional details..." rows="3" class="w-full bg-surface-container-low border border-outline-variant focus:border-secondary rounded-xl p-3 outline-none transition-all text-sm resize-none"></textarea>
+        </div>
+
+        <div class="flex justify-end gap-3 pt-4 border-t border-surface-container">
+          <button type="button" onclick="closeModal('productModal')" class="px-5 py-3 border border-outline-variant rounded-full text-sm font-semibold text-primary hover:bg-surface-container transition-all">Cancel</button>
+          <button type="submit" class="px-6 py-3 bg-secondary hover:bg-primary text-white rounded-full text-sm font-semibold transition-all shadow-sm">Save Product</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="bg-tertiary-container text-on-tertiary-container py-16 px-margin-mobile md:px-margin-desktop w-full mt-0 border-t border-primary/10">
+    <div class="max-w-[1440px] mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+        <div class="md:col-span-1">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="material-symbols-outlined text-secondary text-2xl">coffee</span>
+            <span class="font-headline-md text-white">Brew Heaven</span>
+          </div>
+          <p class="text-white/50 text-sm leading-relaxed">Sri Lanka's sanctuary for slow-living coffee rituals and artisan pastries since 2019.</p>
+        </div>
+        <div>
+          <h4 class="font-bold text-white mb-4 text-sm tracking-widest uppercase">Explore</h4>
+          <div class="flex flex-col gap-3">
+            <a href="menu.html" class="text-white/60 hover:text-white text-sm transition-colors">Our Menu</a>
+            <a href="about.html" class="text-white/60 hover:text-white text-sm transition-colors">Our Story</a>
+            <a href="careers.html" class="text-white/60 hover:text-white text-sm transition-colors">Careers</a>
+          </div>
+        </div>
+        <div>
+          <h4 class="font-bold text-white mb-4 text-sm tracking-widest uppercase">Visit</h4>
+          <div class="flex flex-col gap-2 text-white/60 text-sm">
+            <p>124 Marine Drive</p>
+            <p>Colombo 4</p>
+            <p class="mt-2">Mon–Fri: 7am – 6pm</p>
+            <p>Sat–Sun: 8am – 8pm</p>
+          </div>
+        </div>
+        <div>
+          <h4 class="font-bold text-white mb-4 text-sm tracking-widest uppercase">Connect</h4>
+          <div class="flex flex-col gap-3">
+            <a href="#" class="flex items-center gap-2 text-white/60 hover:text-white text-sm transition-colors"><span class="material-symbols-outlined text-base">public</span> @brewheaven.cafe</a>
+            <a href="#" class="flex items-center gap-2 text-white/60 hover:text-white text-sm transition-colors"><span class="material-symbols-outlined text-base">mail</span> hello@brewheaven.com</a>
+            <a href="contact.html" class="flex items-center gap-2 text-white/60 hover:text-white text-sm transition-colors"><span class="material-symbols-outlined text-base">call</span> +94 11 2555 192</a>
+          </div>
+        </div>
+      </div>
+      <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+        <p class="text-white/30 text-sm">© 2026 Brew Heaven. Crafted for the slow-living coffee enthusiast.</p>
+        <nav class="flex gap-6">
+          <a href="#" class="text-white/30 hover:text-white/60 text-xs transition-colors">Privacy Policy</a>
+          <a href="#" class="text-white/30 hover:text-white/60 text-xs transition-colors">Terms of Service</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    // Sample inventory data
+    let inventory = [
+      { id: 1, name: 'Ethiopian Beans', category: 'Coffee Beans', stock: 45, unit: 'kg', minimum: 20, supplier: 'African Roasters', status: 'good', updated: '2026-06-02 10:30' },
+      { id: 2, name: 'Colombian Dark Roast', category: 'Coffee Beans', stock: 8, unit: 'kg', minimum: 15, supplier: 'South American Coffee Co', status: 'critical', updated: '2026-06-02 09:15' },
+      { id: 3, name: 'Whole Milk', category: 'Milk & Dairy', stock: 12, unit: 'L', minimum: 10, supplier: 'Local Dairy', status: 'warning', updated: '2026-06-02 11:00' },
+      { id: 4, name: 'Almond Milk', category: 'Milk & Dairy', stock: 6, unit: 'L', minimum: 8, supplier: 'Plant Based Foods', status: 'critical', updated: '2026-06-02 08:45' },
+      { id: 5, name: 'Espresso Machine Filters', category: 'Equipment', stock: 200, unit: 'boxes', minimum: 50, supplier: 'Equipment Supplies', status: 'good', updated: '2026-06-02 10:00' },
+      { id: 6, name: 'Croissants', category: 'Pastries', stock: 25, unit: 'units', minimum: 15, supplier: 'Local Bakery', status: 'good', updated: '2026-06-02 07:00' },
+      { id: 7, name: 'Chocolate Sauce', category: 'Supplies', stock: 5, unit: 'L', minimum: 3, supplier: 'Food Distributors', status: 'good', updated: '2026-06-02 09:30' }
+    ];
+
+    // Login Form Handler
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const staffId = document.getElementById('staffId').value;
+      const password = document.getElementById('password').value;
+      
+      if (staffId === 'STAFF001' && password === '1994') {
+        document.getElementById('authView').style.display = 'none';
+        document.getElementById('dashboardView').classList.remove('hidden');
+        renderInventory();
+        renderLowStock();
+        showToast('Login successful!');
+      } else {
+        showToast('Invalid credentials. Check PIN and ID.');
+      }
+    });
+
+    function getStockStatus(stock, min) {
+      if (stock <= min * 0.5) return 'critical';
+      if (stock <= min) return 'warning';
+      return 'good';
+    }
+
+    function renderInventory() {
+      const tbody = document.getElementById('inventoryTableBody');
+      if (!tbody) return;
+
+      tbody.innerHTML = inventory.map(item => {
+        const currentStatus = getStockStatus(item.stock, item.minimum);
+        return `
+          <tr class="hover:bg-surface-container-low transition-colors">
+            <td class="py-4 px-4 font-bold text-primary">${item.name}</td>
+            <td class="py-4 px-4 text-on-surface-variant text-sm">${item.category}</td>
+            <td class="py-4 px-4 font-semibold text-primary">${item.stock} ${item.unit}</td>
+            <td class="py-4 px-4 text-on-surface-variant text-sm">${item.unit}</td>
+            <td class="py-4 px-4">
+              <span class="status-badge status-${currentStatus}">${currentStatus}</span>
+            </td>
+            <td class="py-4 px-4 text-on-surface-variant text-xs">${item.updated}</td>
+            <td class="py-4 px-4 text-right">
+              <div class="flex gap-2 justify-end">
+                <button class="p-2 hover:bg-surface-container rounded-full text-secondary transition-colors" onclick="editProduct(${item.id})" title="Edit Product">
+                  <span class="material-symbols-outlined text-sm">edit</span>
+                </button>
+                <button class="p-2 hover:bg-red-50 rounded-full text-red-600 transition-colors" onclick="deleteProduct(${item.id})" title="Delete Product">
+                  <span class="material-symbols-outlined text-sm">delete</span>
+                </button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+
+      // Update counters
+      document.getElementById('stat-total-stock').textContent = inventory.length;
+      const lowItems = inventory.filter(item => item.stock <= item.minimum).length;
+      document.getElementById('stat-low-stock-count').innerHTML = `
+        <span class="material-symbols-outlined text-sm font-bold">warning</span> ${lowItems} item${lowItems !== 1 ? 's' : ''} low on stock
+      `;
+    }
+
+    function renderLowStock() {
+      const lowItems = inventory.filter(item => item.stock <= item.minimum);
+      const tbody = document.getElementById('lowStockTableBody');
+      if (!tbody) return;
+
+      tbody.innerHTML = lowItems.length === 0 ? 
+        '<tr><td colspan="5" class="py-8 text-center text-on-surface-variant">No low stock items</td></tr>' :
+        lowItems.map(item => `
+          <tr class="hover:bg-surface-container-low transition-colors">
+            <td class="py-4 px-4 font-bold text-primary">${item.name}</td>
+            <td class="py-4 px-4 text-red-600 font-semibold">${item.stock} ${item.unit}</td>
+            <td class="py-4 px-4 text-on-surface-variant">${item.minimum} ${item.unit}</td>
+            <td class="py-4 px-4 text-on-surface-variant text-sm">${item.supplier}</td>
+            <td class="py-4 px-4 text-right">
+              <button class="bg-secondary hover:bg-primary text-white font-semibold text-xs px-4 py-2 rounded-full transition-all shadow-sm" onclick="reorderItem(${item.id})">
+                Reorder
+              </button>
+            </td>
+          </tr>
+        `).join('');
+    }
+
+    function filterInventory() {
+      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+      document.querySelectorAll('#inventoryTableBody tr').forEach(row => {
+        row.style.display = row.innerText.toLowerCase().includes(searchTerm) ? '' : 'none';
+      });
+    }
+
+    function openAddProductModal() {
+      document.getElementById('modalTitle').innerText = 'Add New Product';
+      document.getElementById('productForm').reset();
+      document.getElementById('productId').value = '';
+      openModal('productModal');
+    }
+
+    function editProduct(id) {
+      const product = inventory.find(p => p.id === id);
+      if (product) {
+        document.getElementById('modalTitle').innerText = 'Edit Product';
+        document.getElementById('productId').value = id;
+        document.getElementById('productName').value = product.name;
+        document.getElementById('productCategory').value = product.category;
+        document.getElementById('productStock').value = product.stock;
+        document.getElementById('productUnit').value = product.unit;
+        document.getElementById('productMinimum').value = product.minimum;
+        document.getElementById('productSupplier').value = product.supplier;
+        document.getElementById('productNotes').value = product.notes || '';
+        openModal('productModal');
+      }
+    }
+
+    function deleteProduct(id) {
+      if (confirm('Are you sure you want to delete this product?')) {
+        inventory = inventory.filter(p => p.id !== id);
+        renderInventory();
+        renderLowStock();
+        showToast('Product deleted.');
+      }
+    }
+
+    function reorderItem(id) {
+      const item = inventory.find(p => p.id === id);
+      showToast(`Reorder submitted for ${item ? item.name : 'item'}.`);
+    }
+
+    function orderSupplies() {
+      showToast('Opening supply order request form...');
+    }
+
+    function refreshInventory() {
+      showToast('Inventory refreshed.');
+      renderInventory();
+      renderLowStock();
+    }
+
+    document.getElementById('productForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const id = document.getElementById('productId').value;
+      const newProduct = {
+        id: id ? parseInt(id) : Math.max(...inventory.map(p => p.id)) + 1,
+        name: document.getElementById('productName').value,
+        category: document.getElementById('productCategory').value,
+        stock: parseInt(document.getElementById('productStock').value),
+        unit: document.getElementById('productUnit').value,
+        minimum: parseInt(document.getElementById('productMinimum').value),
+        supplier: document.getElementById('productSupplier').value,
+        notes: document.getElementById('productNotes').value,
+        updated: new Date().toISOString().replace('T', ' ').substring(0, 19)
+      };
+
+      if (id) {
+        const index = inventory.findIndex(p => p.id === parseInt(id));
+        inventory[index] = newProduct;
+        showToast('Product updated.');
+      } else {
+        inventory.push(newProduct);
+        showToast('Product added.');
+      }
+
+      renderInventory();
+      renderLowStock();
+      closeModal('productModal');
+    });
+
+    function openModal(modalId) {
+      document.getElementById(modalId).classList.add('show');
+    }
+
+    function closeModal(modalId) {
+      document.getElementById(modalId).classList.remove('show');
+    }
+
+    function logout() {
+      document.getElementById('authView').style.display = 'flex';
+      document.getElementById('dashboardView').classList.add('hidden');
+      document.getElementById('loginForm').reset();
+      showToast('Logged out.');
+    }
+
+    window.onclick = function(event) {
+      if (event.target.classList.contains('modal')) {
+        event.target.classList.remove('show');
+      }
+    }
+  </script>
+</body>
+</html>

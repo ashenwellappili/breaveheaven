@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Learn about Brew Heaven's story, roasting philosophy, and commitment to ethically sourced specialty coffee in Seattle."/>
+  <title>About Our Sanctuary | Brew Heaven</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="main.css">
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode:"class",
+      theme:{ extend:{ colors:{ "surface-container-lowest":"#ffffff","secondary":"#496455","primary-fixed-dim":"#e3beb8","on-tertiary-fixed-variant":"#4c4542","on-secondary-fixed":"#062014","on-secondary-fixed-variant":"#324c3e","error-container":"#ffdad6","inverse-surface":"#30312e","surface-dim":"#dbdad6","on-tertiary":"#ffffff","on-error-container":"#93000a","on-primary":"#ffffff","surface-container":"#efeeea","outline":"#827472","tertiary":"#1d1815","secondary-fixed-dim":"#b0cdbb","surface-bright":"#fbf9f5","primary-container":"#3e2723","on-secondary":"#ffffff","on-tertiary-container":"#9c938f","surface-tint":"#745853","secondary-container":"#ccead6","surface-container-highest":"#e4e2de","tertiary-fixed":"#ece0dc","on-error":"#ffffff","tertiary-container":"#322c29","secondary-fixed":"#ccead6","inverse-on-surface":"#f2f0ed","surface-variant":"#e4e2de","surface-container-high":"#eae8e4","on-secondary-container":"#4f6a5b","on-surface":"#1b1c1a","on-surface-variant":"#504442","on-primary-fixed-variant":"#5b403c","tertiary-fixed-dim":"#cfc4c0","on-tertiary-fixed":"#201a18","on-background":"#1b1c1a","on-primary-container":"#ae8d87","outline-variant":"#d3c3c0","on-primary-fixed":"#2b1613","surface-container-low":"#f5f3ef","surface":"#fbf9f5","background":"#fbf9f5","primary":"#271310","error":"#ba1a1a","inverse-primary":"#e3beb8","primary-fixed":"#ffdad4" },
+      borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},
+      spacing:{"container-max":"1200px","base":"8px","gutter":"24px","margin-mobile":"20px","margin-desktop":"64px"},
+      fontFamily:{"label-sm":["Plus Jakarta Sans"],"body-md":["Plus Jakarta Sans"],"headline-md":["Source Serif 4"],"headline-xl-mobile":["Source Serif 4"],"headline-xl":["Source Serif 4"],"headline-lg":["Source Serif 4"],"body-lg":["Plus Jakarta Sans"]},
+      fontSize:{ "label-sm":["12px",{"lineHeight":"16px","letterSpacing":"0.05em","fontWeight":"600"}],"body-md":["16px",{"lineHeight":"24px","fontWeight":"400"}],"headline-md":["24px",{"lineHeight":"32px","fontWeight":"600"}],"headline-xl-mobile":["32px",{"lineHeight":"40px","letterSpacing":"-0.01em","fontWeight":"700"}],"headline-xl":["48px",{"lineHeight":"56px","letterSpacing":"-0.02em","fontWeight":"700"}],"headline-lg":["32px",{"lineHeight":"40px","fontWeight":"600"}],"body-lg":["18px",{"lineHeight":"28px","fontWeight":"400"}] } } }
+    }
+  </script>
+</head>
+<body class="font-body-md text-body-md overflow-x-hidden bg-background text-on-background">
+
+  <!-- HEADER -->
+  <header class="fixed top-0 w-full bg-surface/90 backdrop-blur-md shadow-[0_32px_64px_-12px_rgba(62,39,35,0.08)] z-50">
+    <div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop h-16 w-full max-w-[1440px] mx-auto">
+      <div class="flex items-center gap-3 cursor-pointer" onclick="window.location.href='index.html'">
+        <span class="material-symbols-outlined text-primary">coffee</span>
+        <span class="font-headline-md text-headline-md text-primary tracking-tight">Brew Heaven</span>
+      </div>
+      <nav class="hidden md:flex gap-8 items-center">
+        <a class="text-on-surface-variant hover:text-secondary transition-colors" href="index.html">Home</a>
+        <a class="text-on-surface-variant hover:text-secondary transition-colors" href="menu.html">Menu</a>
+        <a class="font-bold text-primary border-b-2 border-primary" href="about.html">About Us</a>
+        <a class="text-on-surface-variant hover:text-secondary transition-colors" href="careers.html">Careers</a>
+        <a class="text-on-surface-variant hover:text-secondary transition-colors" href="contact.html">Contact Us</a>
+        <a class="text-on-surface-variant hover:text-secondary transition-colors" href="inventory.html">Staff Portal</a>
+      </nav>
+      <div class="flex items-center gap-3">
+        <button onclick="openCart()" class="relative p-2 text-primary hover:text-secondary transition-colors">
+          <span class="material-symbols-outlined">shopping_bag</span>
+          <span id="global-cart-count" class="absolute -top-1 -right-1 bg-secondary text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center hidden">0</span>
+        </button>
+        <button class="text-primary md:hidden" onclick="toggleDrawer()"><span class="material-symbols-outlined">menu</span></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE DRAWER -->
+  <div class="fixed inset-0 z-[60] hidden" id="drawer">
+    <div class="absolute inset-0 bg-primary/20 backdrop-blur-sm" onclick="toggleDrawer()"></div>
+    <div class="fixed inset-y-0 right-0 z-[60] flex flex-col py-6 h-full w-80 bg-surface-bright shadow-2xl">
+      <div class="px-6 mb-8 flex justify-between items-center">
+        <span class="font-headline-md text-primary">Brew Heaven</span>
+        <button onclick="toggleDrawer()"><span class="material-symbols-outlined">close</span></button>
+      </div>
+      <div class="flex flex-col gap-1">
+        <a class="text-on-surface-variant px-4 py-3 mx-2 hover:bg-surface-container rounded-full flex items-center gap-4" href="index.html"><span class="material-symbols-outlined">home</span> Home</a>
+        <a class="text-on-surface-variant px-4 py-3 mx-2 hover:bg-surface-container rounded-full flex items-center gap-4" href="menu.html"><span class="material-symbols-outlined">restaurant_menu</span> Menu</a>
+        <a class="bg-secondary-container text-on-secondary-container rounded-full mx-2 px-4 py-3 flex items-center gap-4" href="about.html"><span class="material-symbols-outlined">local_cafe</span> About Us</a>
+        <a class="text-on-surface-variant px-4 py-3 mx-2 hover:bg-surface-container rounded-full flex items-center gap-4" href="careers.html"><span class="material-symbols-outlined">work</span> Careers</a>
+        <a class="text-on-surface-variant px-4 py-3 mx-2 hover:bg-surface-container rounded-full flex items-center gap-4" href="contact.html"><span class="material-symbols-outlined">contact_support</span> Contact Us</a>
+        <a class="text-on-surface-variant px-4 py-3 mx-2 hover:bg-surface-container rounded-full flex items-center gap-4 transition-colors" href="inventory.html"><span class="material-symbols-outlined">badge</span> Staff Portal</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- CART SIDEBAR -->
+  <div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
+  <aside class="cart-sidebar" id="cart-sidebar">
+    <div class="cart-header">
+      <div><h2 class="font-headline-md text-headline-md text-primary">Your Order</h2><p id="cart-item-count-label" class="text-sm text-on-surface-variant">0 items</p></div>
+      <button onclick="closeCart()" class="p-2 rounded-full hover:bg-surface-container"><span class="material-symbols-outlined text-primary">close</span></button>
+    </div>
+    <div class="cart-items-container" id="cart-items-container">
+      <div class="cart-empty-state" id="cart-empty-state">
+        <span class="material-symbols-outlined text-5xl opacity-30">shopping_bag</span>
+        <p class="text-sm font-semibold">Your cart is empty</p>
+        <a href="menu.html" class="mt-2 text-secondary font-bold text-sm hover:underline">Browse Menu →</a>
+      </div>
+    </div>
+    <div class="cart-footer" id="cart-footer" style="display:none">
+      <div class="cart-total-row"><span class="font-bold text-primary text-lg">Total</span><span class="font-headline-md text-primary" id="cart-total-price">LKR 0.00</span></div>
+      <button onclick="handleCheckout()" class="w-full bg-primary hover:bg-secondary text-white font-bold py-4 rounded-full transition-all shadow-md">Proceed to Checkout</button>
+      <button onclick="clearCart()" class="w-full mt-2 text-on-surface-variant text-sm font-semibold py-2 hover:text-error">Clear cart</button>
+    </div>
+  </aside>
+  <div class="toast" id="toast"><span class="material-symbols-outlined">check_circle</span><span id="toast-msg">Added!</span></div>
+
+  <main class="pt-16">
+
+    <!-- PAGE HERO -->
+    <section class="page-hero py-24 px-margin-mobile md:px-margin-desktop text-center relative">
+      <div class="relative z-10 max-w-[1440px] mx-auto">
+        <p class="text-white/50 font-semibold text-sm tracking-widest uppercase mb-3">Est. 2019 · Marine Drive, Colombo 4</p>
+        <h1 class="font-headline-xl text-headline-xl-mobile md:text-headline-xl text-white mb-4">Our Roasting Philosophy</h1>
+        <p class="text-white/70 font-body-lg max-w-xl mx-auto">Coffee is not a transaction. It is an intentional slow-living ritual from soil to ceramic.</p>
+      </div>
+    </section>
+
+    <!-- INTRO SECTION -->
+    <section class="max-w-[1440px] mx-auto px-margin-mobile md:px-margin-desktop py-24">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+        <div class="fade-up">
+          <p class="text-secondary font-semibold text-sm tracking-widest uppercase mb-3">Our Story</p>
+          <h2 class="font-headline-lg text-headline-lg text-primary mb-6">Born from a Slow Morning Ritual</h2>
+          <p class="text-on-surface-variant font-body-lg mb-5 leading-relaxed">
+            At Brew Heaven, coffee is not just a high-speed caffeine transaction. It is an intentional slow-living ritual. Founded with a vision to respect the long journey from soil to ceramic container, we source micro-lots globally.
+          </p>
+          <p class="text-on-surface-variant font-body-lg mb-8 leading-relaxed">
+            Each origin variant is custom profiled on our low-emission drum roasters to balance delicate acidity and bring out intrinsic notes seamlessly. We partner directly with farming cooperatives across Ethiopia, Colombia, and Indonesia.
+          </p>
+          <a href="menu.html" class="inline-flex items-center gap-3 bg-secondary text-white px-8 py-4 rounded-full font-bold shadow-md hover:bg-secondary/90 transition-all">
+            Explore Our Craft <span class="material-symbols-outlined">arrow_forward</span>
+          </a>
+        </div>
+        <div class="relative fade-up fade-up-delay-1">
+          <img alt="Coffee roasting atmosphere" class="rounded-2xl shadow-xl w-full object-cover aspect-[4/3]" src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=900&q=80"/>
+          <div class="absolute -bottom-4 -right-4 bg-primary text-white p-6 rounded-xl hidden lg:block shadow-lg border border-white/10">
+            <span class="text-3xl font-bold block">100%</span>
+            <span class="text-xs tracking-wider uppercase text-white/70">Ethically Certified Sourced</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VALUES -->
+    <section class="bg-surface-container py-24 px-margin-mobile md:px-margin-desktop">
+      <div class="max-w-[1440px] mx-auto">
+        <div class="text-center mb-16 fade-up">
+          <p class="text-secondary font-semibold text-sm tracking-widest uppercase mb-2">What Drives Us</p>
+          <h2 class="font-headline-lg text-headline-lg text-primary">Our Core Values</h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="bg-surface-bright p-8 rounded-2xl shadow-sm fade-up">
+            <div class="w-12 h-12 bg-secondary-container rounded-2xl flex items-center justify-center mb-6">
+              <span class="material-symbols-outlined text-secondary text-2xl">eco</span>
+            </div>
+            <h3 class="font-headline-md text-primary mb-3">Sustainability First</h3>
+            <p class="text-on-surface-variant leading-relaxed">We source exclusively from farms practicing regenerative agriculture. Our packaging is 100% compostable and our roasters run on renewable energy.</p>
+          </div>
+          <div class="bg-surface-bright p-8 rounded-2xl shadow-sm fade-up fade-up-delay-1">
+            <div class="w-12 h-12 bg-secondary-container rounded-2xl flex items-center justify-center mb-6">
+              <span class="material-symbols-outlined text-secondary text-2xl">handshake</span>
+            </div>
+            <h3 class="font-headline-md text-primary mb-3">Farmer Partnerships</h3>
+            <p class="text-on-surface-variant leading-relaxed">We pay above Fair Trade premiums and build multi-year contracts with our farmers, investing in their infrastructure and community programs.</p>
+          </div>
+          <div class="bg-surface-bright p-8 rounded-2xl shadow-sm fade-up fade-up-delay-2">
+            <div class="w-12 h-12 bg-secondary-container rounded-2xl flex items-center justify-center mb-6">
+              <span class="material-symbols-outlined text-secondary text-2xl">science</span>
+            </div>
+            <h3 class="font-headline-md text-primary mb-3">Precision Craft</h3>
+            <p class="text-on-surface-variant leading-relaxed">Every roast profile is data-driven and adjusted for humidity, elevation, and moisture content. We taste every batch before it reaches your cup.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section class="py-24 px-margin-mobile md:px-margin-desktop max-w-[1440px] mx-auto">
+      <div class="text-center mb-16 fade-up">
+        <p class="text-secondary font-semibold text-sm tracking-widest uppercase mb-2">Our Journey</p>
+        <h2 class="font-headline-lg text-headline-lg text-primary">Milestones That Define Us</h2>
+      </div>
+      <div class="max-w-2xl mx-auto">
+        <div class="timeline-item fade-up">
+          <div class="timeline-dot">19</div>
+          <div>
+            <h3 class="font-bold text-primary text-lg mb-1">2019 — The First Pour</h3>
+            <p class="text-on-surface-variant leading-relaxed">Brew Heaven opens its doors at 124 Marine Drive, Colombo 4 with a 12-seat café, a single La Marzocca, and a vision to serve the best coffee in Sri Lanka.</p>
+          </div>
+        </div>
+        <div class="timeline-item fade-up fade-up-delay-1">
+          <div class="timeline-dot">21</div>
+          <div>
+            <h3 class="font-bold text-primary text-lg mb-1">2021 — Roastery Launch</h3>
+            <p class="text-on-surface-variant leading-relaxed">We installed our first 12kg Probat drum roaster and began sourcing directly from Ethiopian natural lots and Colombian washed micro-farms.</p>
+          </div>
+        </div>
+        <div class="timeline-item fade-up fade-up-delay-2">
+          <div class="timeline-dot">23</div>
+          <div>
+            <h3 class="font-bold text-primary text-lg mb-1">2023 — B-Corp Certified</h3>
+            <p class="text-on-surface-variant leading-relaxed">We achieved B-Corp certification, confirming our commitment to environmental performance, accountability, and transparency in operations.</p>
+          </div>
+        </div>
+        <div class="timeline-item fade-up fade-up-delay-3">
+          <div class="timeline-dot">26</div>
+          <div>
+            <h3 class="font-bold text-primary text-lg mb-1">2026 — Community Hub</h3>
+            <p class="text-on-surface-variant leading-relaxed">Expanded to a full sanctuary with a tasting room, monthly brewing workshops, and a wholesale program serving 20+ local restaurants.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TEAM -->
+    <section class="bg-primary-container py-24 px-margin-mobile md:px-margin-desktop">
+      <div class="max-w-[1440px] mx-auto">
+        <div class="text-center mb-16 fade-up">
+          <p class="text-secondary-fixed-dim font-semibold text-sm tracking-widest uppercase mb-2">The People</p>
+          <h2 class="font-headline-lg text-headline-lg text-white">Meet the Team</h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="text-center fade-up">
+            <div class="w-24 h-24 rounded-full bg-secondary-container mx-auto mb-4 flex items-center justify-center text-3xl font-bold text-on-secondary-container shadow-lg">E</div>
+            <h3 class="font-bold text-white text-lg">Elena Maris</h3>
+            <p class="text-white/60 text-sm">Founder & Head Roaster</p>
+            <p class="text-white/40 text-xs mt-2">20 years in specialty coffee across three continents</p>
+          </div>
+          <div class="text-center fade-up fade-up-delay-1">
+            <div class="w-24 h-24 rounded-full bg-secondary-container mx-auto mb-4 flex items-center justify-center text-3xl font-bold text-on-secondary-container shadow-lg">J</div>
+            <h3 class="font-bold text-white text-lg">James Okoro</h3>
+            <p class="text-white/60 text-sm">Lead Barista & Trainer</p>
+            <p class="text-white/40 text-xs mt-2">3× Pacific Northwest Barista Champion</p>
+          </div>
+          <div class="text-center fade-up fade-up-delay-2">
+            <div class="w-24 h-24 rounded-full bg-secondary-container mx-auto mb-4 flex items-center justify-center text-3xl font-bold text-on-secondary-container shadow-lg">L</div>
+            <h3 class="font-bold text-white text-lg">Lena Hsu</h3>
+            <p class="text-white/60 text-sm">Pastry Chef</p>
+            <p class="text-white/40 text-xs mt-2">Trained at Le Cordon Bleu Paris, specializing in Viennoiserie</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-20 px-margin-mobile md:px-margin-desktop text-center">
+      <div class="max-w-xl mx-auto fade-up">
+        <h2 class="font-headline-lg text-headline-lg text-primary mb-4">Ready to Experience It?</h2>
+        <p class="text-on-surface-variant mb-8">Visit us at the sanctuary or order online and taste the difference that intention makes.</p>
+        <div class="flex flex-wrap justify-center gap-4">
+          <a href="menu.html" class="bg-primary text-white px-8 py-4 rounded-full font-bold hover:bg-secondary transition-colors shadow-md">Order Online</a>
+          <a href="contact.html" class="border-2 border-primary text-primary px-8 py-4 rounded-full font-bold hover:bg-surface-container transition-colors">Get Directions</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-tertiary-container text-on-tertiary-container py-12 px-margin-mobile md:px-margin-desktop w-full border-t border-primary/10">
+    <div class="max-w-[1440px] mx-auto flex flex-col items-center gap-8">
+      <div class="flex items-center gap-3"><span class="material-symbols-outlined text-secondary">coffee</span><span class="font-headline-md text-white">Brew Heaven</span></div>
+      <nav class="flex flex-wrap justify-center gap-8"><a class="text-white/70 hover:text-white text-sm" href="index.html">Home</a><a class="text-white/70 hover:text-white text-sm" href="menu.html">Menu</a><a class="text-white/70 hover:text-white text-sm" href="careers.html">Careers</a><a class="text-white/70 hover:text-white text-sm" href="contact.html">Contact</a></nav>
+      <p class="text-white/30 text-sm">© 2026 Brew Heaven. Crafted for the slow-living coffee enthusiast.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

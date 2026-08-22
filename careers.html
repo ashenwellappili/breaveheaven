@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Join the Brew Heaven team. View open positions and apply to be part of Sri Lanka's finest specialty coffee sanctuary."/>
+  <title>Careers | Brew Heaven</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="main.css">
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode:"class",
+      theme:{ extend:{ colors:{ "surface-container-lowest":"#ffffff","secondary":"#496455","primary-fixed-dim":"#e3beb8","on-tertiary-fixed-variant":"#4c4542","on-secondary-fixed":"#062014","on-secondary-fixed-variant":"#324c3e","error-container":"#ffdad6","inverse-surface":"#30312e","surface-dim":"#dbdad6","on-tertiary":"#ffffff","on-error-container":"#93000a","on-primary":"#ffffff","surface-container":"#efeeea","outline":"#827472","tertiary":"#1d1815","secondary-fixed-dim":"#b0cdbb","surface-bright":"#fbf9f5","primary-container":"#3e2723","on-secondary":"#ffffff","on-tertiary-container":"#9c938f","surface-tint":"#745853","secondary-container":"#ccead6","surface-container-highest":"#e4e2de","tertiary-fixed":"#ece0dc","on-error":"#ffffff","tertiary-container":"#322c29","secondary-fixed":"#ccead6","inverse-on-surface":"#f2f0ed","surface-variant":"#e4e2de","surface-container-high":"#eae8e4","on-secondary-container":"#4f6a5b","on-surface":"#1b1c1a","on-surface-variant":"#504442","on-primary-fixed-variant":"#5b403c","tertiary-fixed-dim":"#cfc4c0","on-tertiary-fixed":"#201a18","on-background":"#1b1c1a","on-primary-container":"#ae8d87","outline-variant":"#d3c3c0","on-primary-fixed":"#2b1613","surface-container-low":"#f5f3ef","surface":"#fbf9f5","background":"#fbf9f5","primary":"#271310","error":"#ba1a1a","inverse-primary":"#e3beb8","primary-fixed":"#ffdad4" },
+      borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},
+      spacing:{"container-max":"1200px","base":"8px","gutter":"24px","margin-mobile":"20px","margin-desktop":"64px"},
+      fontFamily:{"label-sm":["Plus Jakarta Sans"],"body-md":["Plus Jakarta Sans"],"headline-md":["Source Serif 4"],"headline-xl-mobile":["Source Serif 4"],"headline-xl":["Source Serif 4"],"headline-lg":["Source Serif 4"],"body-lg":["Plus Jakarta Sans"]},
+      fontSize:{ "label-sm":["12px",{"lineHeight":"16px","letterSpacing":"0.05em","fontWeight":"600"}],"body-md":["16px",{"lineHeight":"24px","fontWeight":"400"}],"headline-md":["24px",{"lineHeight":"32px","fontWeight":"600"}],"headline-xl-mobile":["32px",{"lineHeight":"40px","letterSpacing":"-0.01em","fontWeight":"700"}],"headline-xl":["48px",{"lineHeight":"56px","letterSpacing":"-0.02em","fontWeight":"700"}],"headline-lg":["32px",{"lineHeight":"40px","fontWeight":"600"}],"body-lg":["18px",{"lineHeight":"28px","fontWeight":"400"}] } } }
+    }
+  </script>
+</head>
+<body class="bg-background text-on-background font-body-md overflow-x-hidden">
+
+  <!-- HEADER -->
+  <header class="fixed top-0 w-full bg-surface/90 backdrop-blur-md shadow-[0_32px_64px_-12px_rgba(62,39,35,0.08)] z-50">
+    <div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop h-16 w-full max-w-[1440px] mx-auto">
+      <div class="flex items-center gap-3 cursor-pointer" onclick="window.location.href='index.html'">
+        <span class="material-symbols-outlined text-primary">coffee</span>
+        <span class="font-headline-md text-headline-md text-primary tracking-tight">Brew Heaven</span>
+      </div>
+      <nav class="hidden md:flex gap-8 items-center">
+        <a class="text-on-surface-variant hover:text-secondary transition-colors" href="index.html">Home</a>
+        <a class="text-on-surface-variant hover:text-secondary transition-colors" href="menu.html">Menu</a>
+        <a class="text-on-surface-variant hover:text-secondary transition-colors" href="about.html">About Us</a>
+        <a class="font-bold text-primary border-b-2 border-primary" href="careers.html">Careers</a>
+        <a class="text-on-surface-variant hover:text-secondary transition-colors" href="contact.html">Contact Us</a>
+        <a class="text-on-surface-variant hover:text-secondary transition-colors" href="inventory.html">Staff Portal</a>
+      </nav>
+      <div class="flex items-center gap-3">
+        <button onclick="openCart()" class="relative p-2 text-primary hover:text-secondary transition-colors">
+          <span class="material-symbols-outlined">shopping_bag</span>
+          <span id="global-cart-count" class="absolute -top-1 -right-1 bg-secondary text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center hidden">0</span>
+        </button>
+        <button class="text-primary md:hidden" onclick="toggleDrawer()"><span class="material-symbols-outlined">menu</span></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE DRAWER -->
+  <div class="fixed inset-0 z-[60] hidden" id="drawer">
+    <div class="absolute inset-0 bg-primary/20 backdrop-blur-sm" onclick="toggleDrawer()"></div>
+    <div class="fixed inset-y-0 right-0 z-[60] flex flex-col py-6 h-full w-80 bg-surface-bright shadow-2xl">
+      <div class="px-6 mb-8 flex justify-between items-center">
+        <span class="font-headline-md text-primary">Brew Heaven</span>
+        <button onclick="toggleDrawer()"><span class="material-symbols-outlined">close</span></button>
+      </div>
+      <div class="flex flex-col gap-1">
+        <a class="text-on-surface-variant px-4 py-3 mx-2 hover:bg-surface-container rounded-full flex items-center gap-4" href="index.html"><span class="material-symbols-outlined">home</span> Home</a>
+        <a class="text-on-surface-variant px-4 py-3 mx-2 hover:bg-surface-container rounded-full flex items-center gap-4" href="menu.html"><span class="material-symbols-outlined">restaurant_menu</span> Menu</a>
+        <a class="text-on-surface-variant px-4 py-3 mx-2 hover:bg-surface-container rounded-full flex items-center gap-4" href="about.html"><span class="material-symbols-outlined">local_cafe</span> About Us</a>
+        <a class="bg-secondary-container text-on-secondary-container rounded-full mx-2 px-4 py-3 flex items-center gap-4" href="careers.html"><span class="material-symbols-outlined">work</span> Careers</a>
+        <a class="text-on-surface-variant px-4 py-3 mx-2 hover:bg-surface-container rounded-full flex items-center gap-4" href="contact.html"><span class="material-symbols-outlined">contact_support</span> Contact Us</a>
+        <a class="text-on-surface-variant px-4 py-3 mx-2 hover:bg-surface-container rounded-full flex items-center gap-4 transition-colors" href="inventory.html"><span class="material-symbols-outlined">badge</span> Staff Portal</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- CART SIDEBAR -->
+  <div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
+  <aside class="cart-sidebar" id="cart-sidebar">
+    <div class="cart-header">
+      <div><h2 class="font-headline-md text-headline-md text-primary">Your Order</h2><p id="cart-item-count-label" class="text-sm text-on-surface-variant">0 items</p></div>
+      <button onclick="closeCart()" class="p-2 rounded-full hover:bg-surface-container"><span class="material-symbols-outlined text-primary">close</span></button>
+    </div>
+    <div class="cart-items-container" id="cart-items-container">
+      <div class="cart-empty-state" id="cart-empty-state">
+        <span class="material-symbols-outlined text-5xl opacity-30">shopping_bag</span>
+        <p class="text-sm font-semibold">Your cart is empty</p>
+        <a href="menu.html" class="mt-2 text-secondary font-bold text-sm hover:underline">Browse Menu →</a>
+      </div>
+    </div>
+    <div class="cart-footer" id="cart-footer" style="display:none">
+      <div class="cart-total-row"><span class="font-bold text-primary text-lg">Total</span><span class="font-headline-md text-primary" id="cart-total-price">LKR 0.00</span></div>
+      <button onclick="handleCheckout()" class="w-full bg-primary hover:bg-secondary text-white font-bold py-4 rounded-full transition-all shadow-md">Proceed to Checkout</button>
+      <button onclick="clearCart()" class="w-full mt-2 text-on-surface-variant text-sm font-semibold py-2 hover:text-error">Clear cart</button>
+    </div>
+  </aside>
+  <div class="toast" id="toast"><span class="material-symbols-outlined">check_circle</span><span id="toast-msg">Added!</span></div>
+
+  <main class="pt-16">
+
+    <!-- PAGE HERO -->
+    <section class="page-hero py-24 px-margin-mobile md:px-margin-desktop text-center relative">
+      <div class="relative z-10 max-w-[1440px] mx-auto">
+        <p class="text-white/50 font-semibold text-sm tracking-widest uppercase mb-3">We're Hiring</p>
+        <h1 class="font-headline-xl text-headline-xl-mobile md:text-headline-xl text-white mb-4">Join Our Coffee Family</h1>
+        <p class="text-white/70 font-body-lg max-w-xl mx-auto">We look for meticulous, warm, passionate individuals driven to master the craft of extraction and hospitality.</p>
+      </div>
+    </section>
+
+    <!-- PERKS -->
+    <section class="py-20 px-margin-mobile md:px-margin-desktop bg-surface-container">
+      <div class="max-w-[1440px] mx-auto">
+        <div class="text-center mb-12 fade-up">
+          <p class="text-secondary font-semibold text-sm tracking-widest uppercase mb-2">Why Work Here</p>
+          <h2 class="font-headline-lg text-headline-lg text-primary">Life at Brew Heaven</h2>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div class="bg-surface-bright rounded-2xl p-6 text-center shadow-sm fade-up">
+            <span class="material-symbols-outlined text-secondary text-3xl mb-3 block">health_and_safety</span>
+            <h4 class="font-bold text-primary mb-1">Full Health Cover</h4>
+            <p class="text-on-surface-variant text-xs leading-relaxed">Medical, dental & vision for full-time staff</p>
+          </div>
+          <div class="bg-surface-bright rounded-2xl p-6 text-center shadow-sm fade-up fade-up-delay-1">
+            <span class="material-symbols-outlined text-secondary text-3xl mb-3 block">coffee</span>
+            <h4 class="font-bold text-primary mb-1">Free Daily Coffee</h4>
+            <p class="text-on-surface-variant text-xs leading-relaxed">Unlimited drinks on shift + a bag of beans to take home weekly</p>
+          </div>
+          <div class="bg-surface-bright rounded-2xl p-6 text-center shadow-sm fade-up fade-up-delay-2">
+            <span class="material-symbols-outlined text-secondary text-3xl mb-3 block">school</span>
+            <h4 class="font-bold text-primary mb-1">Barista Training</h4>
+            <p class="text-on-surface-variant text-xs leading-relaxed">Paid SCA courses and in-house sensory workshops</p>
+          </div>
+          <div class="bg-surface-bright rounded-2xl p-6 text-center shadow-sm fade-up fade-up-delay-3">
+            <span class="material-symbols-outlined text-secondary text-3xl mb-3 block">trending_up</span>
+            <h4 class="font-bold text-primary mb-1">Growth Path</h4>
+            <p class="text-on-surface-variant text-xs leading-relaxed">Clear advancement program from barista to lead to manager</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- JOBS + FORM -->
+    <section class="py-20 px-margin-mobile md:px-margin-desktop max-w-[1440px] mx-auto">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+
+        <!-- Job Listings -->
+        <div class="lg:col-span-5 space-y-4 fade-up">
+          <h2 class="font-headline-lg text-headline-lg text-primary mb-6">Open Positions</h2>
+
+          <div class="job-card selected" id="job-barista" onclick="selectJob('barista')">
+            <div class="flex justify-between items-start mb-2">
+              <h4 class="font-bold text-primary text-lg">Lead Artisan Barista</h4>
+              <span class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-xs font-bold">Full-Time</span>
+            </div>
+            <p class="text-secondary font-semibold text-sm mb-3">📍 Marine Drive, Colombo 4 · LKR 1,500–LKR 2,000/hr</p>
+            <p class="text-on-surface-variant text-sm leading-relaxed">Requires 2+ years pulling shots in high-volume specialty bars. Understanding extraction rates, milk texturing, and seasonal beans is critical.</p>
+            <div class="flex gap-2 mt-4 flex-wrap">
+              <span class="bg-surface-container px-2 py-1 rounded-full text-xs font-semibold text-on-surface-variant">Espresso</span>
+              <span class="bg-surface-container px-2 py-1 rounded-full text-xs font-semibold text-on-surface-variant">Milk Texturing</span>
+              <span class="bg-surface-container px-2 py-1 rounded-full text-xs font-semibold text-on-surface-variant">Customer Service</span>
+            </div>
+          </div>
+
+          <div class="job-card" id="job-supervisor" onclick="selectJob('supervisor')">
+            <div class="flex justify-between items-start mb-2">
+              <h4 class="font-bold text-primary text-lg">Shift Operations Supervisor</h4>
+              <span class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-xs font-bold">Full-Time</span>
+            </div>
+            <p class="text-secondary font-semibold text-sm mb-3">📍 Evening Rotation · LKR 2,000–LKR 2,500/hr</p>
+            <p class="text-on-surface-variant text-sm leading-relaxed">Oversee inventory management, daily workflow, and preserve the cozy, welcoming ambiance of the café footprint safely.</p>
+            <div class="flex gap-2 mt-4 flex-wrap">
+              <span class="bg-surface-container px-2 py-1 rounded-full text-xs font-semibold text-on-surface-variant">Leadership</span>
+              <span class="bg-surface-container px-2 py-1 rounded-full text-xs font-semibold text-on-surface-variant">Inventory</span>
+              <span class="bg-surface-container px-2 py-1 rounded-full text-xs font-semibold text-on-surface-variant">Operations</span>
+            </div>
+          </div>
+
+          <div class="job-card" id="job-pastry" onclick="selectJob('pastry')">
+            <div class="flex justify-between items-start mb-2">
+              <h4 class="font-bold text-primary text-lg">Junior Pastry Baker</h4>
+              <span class="bg-tertiary-container text-on-tertiary-container px-3 py-1 rounded-full text-xs font-bold">Part-Time</span>
+            </div>
+            <p class="text-secondary font-semibold text-sm mb-3">📍 Morning Shift · LKR 1,200–LKR 1,500/hr</p>
+            <p class="text-on-surface-variant text-sm leading-relaxed">Early morning pastry production role. Experience with laminated dough, viennoiserie, and artisan bread preferred.</p>
+            <div class="flex gap-2 mt-4 flex-wrap">
+              <span class="bg-surface-container px-2 py-1 rounded-full text-xs font-semibold text-on-surface-variant">Baking</span>
+              <span class="bg-surface-container px-2 py-1 rounded-full text-xs font-semibold text-on-surface-variant">Lamination</span>
+              <span class="bg-surface-container px-2 py-1 rounded-full text-xs font-semibold text-on-surface-variant">Early Morning</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Application Form -->
+        <div class="lg:col-span-7 bg-white p-8 rounded-2xl shadow-xl border border-primary/5 fade-up fade-up-delay-1">
+          <h3 class="font-headline-md text-headline-md text-primary mb-2">Application Portal</h3>
+          <p id="selected-job-label" class="text-secondary font-semibold text-sm mb-8">Applying for: Lead Artisan Barista</p>
+
+          <form id="careers-form" onsubmit="handleCareerSubmit(event)" class="space-y-5" novalidate>
+            <div>
+              <label class="block text-sm font-semibold text-primary mb-2">Full Name *</label>
+              <input type="text" id="career-name" required placeholder="Jane Doe" class="w-full bg-surface-container-low border border-outline-variant focus:border-secondary rounded-xl p-3 outline-none transition-all"/>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-semibold text-primary mb-2">Email Address *</label>
+                <input type="email" id="career-email" required placeholder="jane@email.com" class="w-full bg-surface-container-low border border-outline-variant focus:border-secondary rounded-xl p-3 outline-none transition-all"/>
+              </div>
+              <div>
+                <label class="block text-sm font-semibold text-primary mb-2">Phone Number *</label>
+                <input type="tel" id="career-phone" required placeholder="+94 11 2555 192" class="w-full bg-surface-container-low border border-outline-variant focus:border-secondary rounded-xl p-3 outline-none transition-all"/>
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-primary mb-2">Target Position *</label>
+              <select id="career-position" required class="w-full bg-surface-container-low border border-outline-variant focus:border-secondary rounded-xl p-3 outline-none transition-all">
+                <option value="barista">Lead Artisan Barista (LKR 1,500–LKR 2,000/hr)</option>
+                <option value="supervisor">Shift Operations Supervisor (LKR 2,000–LKR 2,500/hr)</option>
+                <option value="pastry">Junior Pastry Baker (LKR 1,200–LKR 1,500/hr)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-primary mb-2">Years of Relevant Experience *</label>
+              <select id="career-experience" required class="w-full bg-surface-container-low border border-outline-variant focus:border-secondary rounded-xl p-3 outline-none transition-all">
+                <option value="">Select experience level</option>
+                <option value="0-1">Less than 1 year</option>
+                <option value="1-2">1–2 years</option>
+                <option value="2-5">2–5 years</option>
+                <option value="5+">5+ years</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-primary mb-2">Why do you want to join Brew Heaven? *</label>
+              <textarea rows="4" id="career-message" required placeholder="Tell us about your connection to coffee and customer hospitality..." class="w-full bg-surface-container-low border border-outline-variant focus:border-secondary rounded-xl p-3 outline-none transition-all resize-none"></textarea>
+            </div>
+            <button type="submit" id="career-submit-btn" class="w-full bg-primary hover:bg-secondary text-white font-bold py-4 rounded-full transition-all shadow-md flex items-center justify-center gap-2">
+              <span class="material-symbols-outlined text-[18px]">send</span>
+              Submit Application
+            </button>
+          </form>
+
+          <!-- Success State (hidden by default) -->
+          <div id="careers-success" class="hidden text-center py-12">
+            <span class="material-symbols-outlined text-secondary text-6xl mb-4 block">check_circle</span>
+            <h3 class="font-headline-md text-primary mb-2">Application Received!</h3>
+            <p class="text-on-surface-variant">Thank you for applying. We'll review your application and get back to you within 3–5 business days.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-tertiary-container text-on-tertiary-container py-12 px-margin-mobile md:px-margin-desktop w-full border-t border-primary/10">
+    <div class="max-w-[1440px] mx-auto flex flex-col items-center gap-8">
+      <div class="flex items-center gap-3"><span class="material-symbols-outlined text-secondary">coffee</span><span class="font-headline-md text-white">Brew Heaven</span></div>
+      <nav class="flex flex-wrap justify-center gap-8"><a class="text-white/70 hover:text-white text-sm" href="index.html">Home</a><a class="text-white/70 hover:text-white text-sm" href="menu.html">Menu</a><a class="text-white/70 hover:text-white text-sm" href="about.html">About</a><a class="text-white/70 hover:text-white text-sm" href="contact.html">Contact</a></nav>
+      <p class="text-white/30 text-sm">© 2026 Brew Heaven. Crafted for the slow-living coffee enthusiast.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

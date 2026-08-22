@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Browse Brew Heaven's full menu of specialty coffees, teas, cold brews, and artisan pastries. Order online for pickup."/>
+  <title>Menu | Brew Heaven</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="main.css">
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-container-lowest":"#ffffff","secondary":"#496455","primary-fixed-dim":"#e3beb8",
+            "on-tertiary-fixed-variant":"#4c4542","on-secondary-fixed":"#062014","on-secondary-fixed-variant":"#324c3e",
+            "error-container":"#ffdad6","inverse-surface":"#30312e","surface-dim":"#dbdad6","on-tertiary":"#ffffff",
+            "on-error-container":"#93000a","on-primary":"#ffffff","surface-container":"#efeeea","outline":"#827472",
+            "tertiary":"#1d1815","secondary-fixed-dim":"#b0cdbb","surface-bright":"#fbf9f5","primary-container":"#3e2723",
+            "on-secondary":"#ffffff","on-tertiary-container":"#9c938f","surface-tint":"#745853","secondary-container":"#ccead6",
+            "surface-container-highest":"#e4e2de","tertiary-fixed":"#ece0dc","on-error":"#ffffff","tertiary-container":"#322c29",
+            "secondary-fixed":"#ccead6","inverse-on-surface":"#f2f0ed","surface-variant":"#e4e2de","surface-container-high":"#eae8e4",
+            "on-secondary-container":"#4f6a5b","on-surface":"#1b1c1a","on-surface-variant":"#504442","on-primary-fixed-variant":"#5b403c",
+            "tertiary-fixed-dim":"#cfc4c0","on-tertiary-fixed":"#201a18","on-background":"#1b1c1a","on-primary-container":"#ae8d87",
+            "outline-variant":"#d3c3c0","on-primary-fixed":"#2b1613","surface-container-low":"#f5f3ef","surface":"#fbf9f5",
+            "background":"#fbf9f5","primary":"#271310","error":"#ba1a1a","inverse-primary":"#e3beb8","primary-fixed":"#ffdad4"
+          },
+          borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},
+          spacing:{"container-max":"1200px","base":"8px","gutter":"24px","margin-mobile":"20px","margin-desktop":"64px"},
+          fontFamily:{"label-sm":["Plus Jakarta Sans"],"body-md":["Plus Jakarta Sans"],"headline-md":["Source Serif 4"],"headline-xl-mobile":["Source Serif 4"],"headline-xl":["Source Serif 4"],"headline-lg":["Source Serif 4"],"body-lg":["Plus Jakarta Sans"]},
+          fontSize:{
+            "label-sm":["12px",{"lineHeight":"16px","letterSpacing":"0.05em","fontWeight":"600"}],
+            "body-md":["16px",{"lineHeight":"24px","fontWeight":"400"}],
+            "headline-md":["24px",{"lineHeight":"32px","fontWeight":"600"}],
+            "headline-xl-mobile":["32px",{"lineHeight":"40px","letterSpacing":"-0.01em","fontWeight":"700"}],
+            "headline-xl":["48px",{"lineHeight":"56px","letterSpacing":"-0.02em","fontWeight":"700"}],
+            "headline-lg":["32px",{"lineHeight":"40px","fontWeight":"600"}],
+            "body-lg":["18px",{"lineHeight":"28px","fontWeight":"400"}]
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="font-body-md text-body-md overflow-x-hidden bg-background text-on-background">
+
+  <!-- HEADER -->
+  <header class="fixed top-0 w-full bg-surface/90 backdrop-blur-md shadow-[0_32px_64px_-12px_rgba(62,39,35,0.08)] z-50">
+    <div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop h-16 w-full max-w-[1440px] mx-auto">
+      <div class="flex items-center gap-3 cursor-pointer" onclick="window.location.href='index.html'">
+        <span class="material-symbols-outlined text-primary">coffee</span>
+        <span class="font-headline-md text-headline-md text-primary tracking-tight">Brew Heaven</span>
+      </div>
+      <nav class="hidden md:flex gap-8 items-center">
+        <a class="text-on-surface-variant hover:text-secondary transition-colors" href="index.html">Home</a>
+        <a class="font-bold text-primary border-b-2 border-primary" href="menu.html">Menu</a>
+        <a class="text-on-surface-variant hover:text-secondary transition-colors" href="about.html">About Us</a>
+        <a class="text-on-surface-variant hover:text-secondary transition-colors" href="careers.html">Careers</a>
+        <a class="text-on-surface-variant hover:text-secondary transition-colors" href="contact.html">Contact Us</a>
+      </nav>
+      <div class="flex items-center gap-3">
+        <button onclick="openCart()" class="relative p-2 text-primary hover:text-secondary transition-colors" aria-label="Open cart">
+          <span class="material-symbols-outlined">shopping_bag</span>
+          <span id="global-cart-count" class="absolute -top-1 -right-1 bg-secondary text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center hidden">0</span>
+        </button>
+        <button class="text-primary md:hidden" onclick="toggleDrawer()"><span class="material-symbols-outlined">menu</span></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE DRAWER -->
+  <div class="fixed inset-0 z-[60] hidden" id="drawer">
+    <div class="absolute inset-0 bg-primary/20 backdrop-blur-sm" onclick="toggleDrawer()"></div>
+    <div class="fixed inset-y-0 right-0 z-[60] flex flex-col py-6 h-full w-80 bg-surface-bright shadow-2xl">
+      <div class="px-6 mb-8 flex justify-between items-center">
+        <span class="font-headline-md text-primary">Brew Heaven</span>
+        <button onclick="toggleDrawer()"><span class="material-symbols-outlined">close</span></button>
+      </div>
+      <div class="flex flex-col gap-1">
+        <a class="text-on-surface-variant px-4 py-3 mx-2 hover:bg-surface-container rounded-full flex items-center gap-4 transition-colors" href="index.html"><span class="material-symbols-outlined">home</span> Home</a>
+        <a class="bg-secondary-container text-on-secondary-container rounded-full mx-2 px-4 py-3 flex items-center gap-4" href="menu.html"><span class="material-symbols-outlined">restaurant_menu</span> Menu</a>
+        <a class="text-on-surface-variant px-4 py-3 mx-2 hover:bg-surface-container rounded-full flex items-center gap-4 transition-colors" href="about.html"><span class="material-symbols-outlined">local_cafe</span> About Us</a>
+        <a class="text-on-surface-variant px-4 py-3 mx-2 hover:bg-surface-container rounded-full flex items-center gap-4 transition-colors" href="careers.html"><span class="material-symbols-outlined">work</span> Careers</a>
+        <a class="text-on-surface-variant px-4 py-3 mx-2 hover:bg-surface-container rounded-full flex items-center gap-4 transition-colors" href="contact.html"><span class="material-symbols-outlined">contact_support</span> Contact Us</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- CART SIDEBAR -->
+  <div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
+  <aside class="cart-sidebar" id="cart-sidebar">
+    <div class="cart-header">
+      <div>
+        <h2 class="font-headline-md text-headline-md text-primary">Your Order</h2>
+        <p id="cart-item-count-label" class="text-sm text-on-surface-variant">0 items</p>
+      </div>
+      <button onclick="closeCart()" class="p-2 rounded-full hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-primary">close</span></button>
+    </div>
+    <div class="cart-items-container" id="cart-items-container">
+      <div class="cart-empty-state" id="cart-empty-state">
+        <span class="material-symbols-outlined text-5xl opacity-30">shopping_bag</span>
+        <p class="text-sm font-semibold">Your cart is empty</p>
+        <p class="text-xs text-center max-w-[200px]">Add items from our menu to get started</p>
+      </div>
+    </div>
+    <div class="cart-footer" id="cart-footer" style="display:none">
+      <div class="cart-total-row">
+        <span class="font-bold text-primary text-lg">Total</span>
+        <span class="font-headline-md text-primary" id="cart-total-price">LKR 0.00</span>
+      </div>
+      <button onclick="handleCheckout()" class="w-full bg-primary hover:bg-secondary text-white font-bold py-4 rounded-full transition-all shadow-md">Proceed to Checkout</button>
+      <button onclick="clearCart()" class="w-full mt-2 text-on-surface-variant text-sm font-semibold py-2 hover:text-error transition-colors">Clear cart</button>
+    </div>
+  </aside>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast">
+    <span class="material-symbols-outlined">check_circle</span>
+    <span id="toast-msg">Added to cart!</span>
+  </div>
+
+  <main class="pt-16">
+    <!-- PAGE HERO -->
+    <section class="page-hero py-20 px-margin-mobile md:px-margin-desktop text-white text-center relative">
+      <div class="relative z-10 max-w-[1440px] mx-auto">
+        <p class="text-white/50 font-semibold text-sm tracking-widest uppercase mb-3">Handcrafted Selections</p>
+        <h1 class="font-headline-xl text-headline-xl-mobile md:text-headline-xl mb-4">Our Full Menu</h1>
+        <p class="text-white/70 font-body-lg max-w-xl mx-auto">From single-origin pour-overs to seasonal matcha lattes — every item is made to order with love.</p>
+      </div>
+    </section>
+
+    <!-- FILTER BAR -->
+    <div class="sticky top-16 z-40 bg-surface/95 backdrop-blur-md border-b border-outline-variant/30 px-margin-mobile md:px-margin-desktop py-4 shadow-sm">
+      <div class="max-w-[1440px] mx-auto flex gap-3 overflow-x-auto pb-1 scrollbar-none">
+        <button class="filter-chip active" data-filter="all" onclick="filterMenu('all',this)" id="filter-all">All Items</button>
+        <button class="filter-chip" data-filter="espresso" onclick="filterMenu('espresso',this)" id="filter-espresso">Espresso</button>
+        <button class="filter-chip" data-filter="cold" onclick="filterMenu('cold',this)" id="filter-cold">Cold Drinks</button>
+        <button class="filter-chip" data-filter="tea" onclick="filterMenu('tea',this)" id="filter-tea">Tea & Matcha</button>
+        <button class="filter-chip" data-filter="pastry" onclick="filterMenu('pastry',this)" id="filter-pastry">Pastries</button>
+        <button class="filter-chip" data-filter="seasonal" onclick="filterMenu('seasonal',this)" id="filter-seasonal">Seasonal</button>
+      </div>
+    </div>
+
+    <!-- MENU GRID -->
+    <section class="py-16 px-margin-mobile md:px-margin-desktop max-w-[1440px] mx-auto">
+
+      <!-- Espresso Section -->
+      <div class="mb-16" id="section-espresso">
+        <h2 class="font-headline-lg text-headline-lg text-primary mb-2">Espresso Classics</h2>
+        <p class="text-on-surface-variant mb-10">Our signature espresso-based drinks, crafted with precision pulled shots.</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="grid-espresso">
+
+          <div class="menu-card fade-up" data-category="espresso">
+            <div class="img-wrap"><img src="https://images.unsplash.com/photo-1561047029-3000c68339ca?w=400&q=80" alt="Almond Cortado"/></div>
+            <div class="p-5">
+              <div class="flex gap-2 mb-2 flex-wrap">
+                <span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full text-[11px] font-semibold">Smooth</span>
+                <span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full text-[11px] font-semibold">Nutty</span>
+              </div>
+              <h3 class="font-bold text-primary text-base mb-1">Almond Cortado</h3>
+              <p class="text-on-surface-variant text-sm mb-4 leading-relaxed">Double shot espresso balanced with steamed organic almond milk.</p>
+              <div class="flex justify-between items-center">
+                <span class="font-bold text-primary text-lg">LKR 960</span>
+                <button onclick="addToCartQuick('Almond Cortado','LKR 960',960,'https://images.unsplash.com/photo-1561047029-3000c68339ca?w=120&q=70')" class="bg-primary text-white w-9 h-9 rounded-full flex items-center justify-center hover:bg-secondary transition-colors">
+                  <span class="material-symbols-outlined text-[18px]">add</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="menu-card fade-up fade-up-delay-1" data-category="espresso">
+            <div class="img-wrap"><img src="https://images.unsplash.com/photo-1521302080334-4bebac2763a6?w=400&q=80" alt="Flat White"/></div>
+            <div class="p-5">
+              <div class="flex gap-2 mb-2"><span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full text-[11px] font-semibold">Creamy</span><span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full text-[11px] font-semibold">Rich</span></div>
+              <h3 class="font-bold text-primary text-base mb-1">Velvet Flat White</h3>
+              <p class="text-on-surface-variant text-sm mb-4 leading-relaxed">Ristretto shots with micro-foam whole milk for a velvety finish.</p>
+              <div class="flex justify-between items-center">
+                <span class="font-bold text-primary text-lg">LKR 900</span>
+                <button onclick="addToCartQuick('Velvet Flat White','LKR 900',900,'https://images.unsplash.com/photo-1521302080334-4bebac2763a6?w=120&q=70')" class="bg-primary text-white w-9 h-9 rounded-full flex items-center justify-center hover:bg-secondary transition-colors"><span class="material-symbols-outlined text-[18px]">add</span></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="menu-card fade-up fade-up-delay-2" data-category="espresso">
+            <div class="img-wrap"><img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400&q=80" alt="Caramel Macchiato"/></div>
+            <div class="p-5">
+              <div class="flex gap-2 mb-2"><span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full text-[11px] font-semibold">Sweet</span><span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full text-[11px] font-semibold">Caramel</span></div>
+              <h3 class="font-bold text-primary text-base mb-1">Caramel Macchiato</h3>
+              <p class="text-on-surface-variant text-sm mb-4 leading-relaxed">Layered espresso and steamed milk finished with house caramel drizzle.</p>
+              <div class="flex justify-between items-center">
+                <span class="font-bold text-primary text-lg">LKR 1,000</span>
+                <button onclick="addToCartQuick('Caramel Macchiato','LKR 1,000',1000,'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=120&q=70')" class="bg-primary text-white w-9 h-9 rounded-full flex items-center justify-center hover:bg-secondary transition-colors"><span class="material-symbols-outlined text-[18px]">add</span></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="menu-card fade-up fade-up-delay-3" data-category="espresso">
+            <div class="img-wrap"><img src="https://images.unsplash.com/photo-1534040385115-33dcb3acba5b?w=400&q=80" alt="Hazelnut Latte"/></div>
+            <div class="p-5">
+              <div class="flex gap-2 mb-2"><span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full text-[11px] font-semibold">Nutty</span><span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full text-[11px] font-semibold">Warm</span></div>
+              <h3 class="font-bold text-primary text-base mb-1">Hazelnut Latte</h3>
+              <p class="text-on-surface-variant text-sm mb-4 leading-relaxed">Espresso with house-made hazelnut syrup and perfectly steamed whole milk.</p>
+              <div class="flex justify-between items-center">
+                <span class="font-bold text-primary text-lg">LKR 1,040</span>
+                <button onclick="addToCartQuick('Hazelnut Latte','LKR 1,040',1040,'https://images.unsplash.com/photo-1534040385115-33dcb3acba5b?w=120&q=70')" class="bg-primary text-white w-9 h-9 rounded-full flex items-center justify-center hover:bg-secondary transition-colors"><span class="material-symbols-outlined text-[18px]">add</span></button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Cold Drinks -->
+      <div class="mb-16" id="section-cold">
+        <h2 class="font-headline-lg text-headline-lg text-primary mb-2">Cold Drinks</h2>
+        <p class="text-on-surface-variant mb-10">Slow-steeped, chilled to perfection, and poured over hand-cut ice.</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+          <div class="menu-card fade-up" data-category="cold">
+            <div class="img-wrap"><img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=400&q=80" alt="Signature Cold Brew"/></div>
+            <div class="p-5">
+              <div class="flex gap-2 mb-2"><span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full text-[11px] font-semibold">Bold</span><span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full text-[11px] font-semibold">Crisp</span></div>
+              <h3 class="font-bold text-primary text-base mb-1">Signature Cold Brew</h3>
+              <p class="text-on-surface-variant text-sm mb-4 leading-relaxed">Steeped 18 hours in cold volcanic spring water for silky chocolate notes.</p>
+              <div class="flex justify-between items-center">
+                <span class="font-bold text-primary text-lg">LKR 1,040</span>
+                <button onclick="addToCartQuick('Signature Cold Brew','LKR 1,040',1040,'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=120&q=70')" class="bg-primary text-white w-9 h-9 rounded-full flex items-center justify-center hover:bg-secondary transition-colors"><span class="material-symbols-outlined text-[18px]">add</span></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="menu-card fade-up fade-up-delay-1" data-category="cold">
+            <div class="img-wrap"><img src="https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=400&q=80" alt="Iced Americano"/></div>
+            <div class="p-5">
+              <div class="flex gap-2 mb-2"><span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full text-[11px] font-semibold">Strong</span><span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full text-[11px] font-semibold">Clean</span></div>
+              <h3 class="font-bold text-primary text-base mb-1">Iced Americano</h3>
+              <p class="text-on-surface-variant text-sm mb-4 leading-relaxed">Triple ristretto shots over filtered water and hand-cut clear ice.</p>
+              <div class="flex justify-between items-center">
+                <span class="font-bold text-primary text-lg">LKR 840</span>
+                <button onclick="addToCartQuick('Iced Americano','LKR 840',840,'https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=120&q=70')" class="bg-primary text-white w-9 h-9 rounded-full flex items-center justify-center hover:bg-secondary transition-colors"><span class="material-symbols-outlined text-[18px]">add</span></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="menu-card fade-up fade-up-delay-2" data-category="cold">
+            <div class="img-wrap"><img src="https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=400&q=80" alt="Coconut Cold Brew"/></div>
+            <div class="p-5">
+              <div class="flex gap-2 mb-2"><span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full text-[11px] font-semibold">Tropical</span><span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full text-[11px] font-semibold">Sweet</span></div>
+              <h3 class="font-bold text-primary text-base mb-1">Coconut Cold Brew</h3>
+              <p class="text-on-surface-variant text-sm mb-4 leading-relaxed">Cold brew with a float of creamy coconut milk and a hint of vanilla.</p>
+              <div class="flex justify-between items-center">
+                <span class="font-bold text-primary text-lg">LKR 1,160</span>
+                <button onclick="addToCartQuick('Coconut Cold Brew','LKR 1,160',1160,'https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=120&q=70')" class="bg-primary text-white w-9 h-9 rounded-full flex items-center justify-center hover:bg-secondary transition-colors"><span class="material-symbols-outlined text-[18px]">add</span></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="menu-card fade-up fade-up-delay-3" data-category="cold">
+            <div class="img-wrap"><img src="assets/menu/iced-strawberry latte.jpg" alt="Strawberry Iced Latte"/></div>
+            <div class="p-5">
+              <div class="flex gap-2 mb-2"><span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full text-[11px] font-semibold">Fruity</span><span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full text-[11px] font-semibold">Bright</span></div>
+              <h3 class="font-bold text-primary text-base mb-1">Strawberry Iced Latte</h3>
+              <p class="text-on-surface-variant text-sm mb-4 leading-relaxed">Fresh strawberry purée, oat milk and espresso over ice — summer in a cup.</p>
+              <div class="flex justify-between items-center">
+                <span class="font-bold text-primary text-lg">LKR 1,120</span>
+                <button onclick="addToCartQuick('Strawberry Iced Latte','LKR 1,120',1120,'assets/menu/iced-strawberry latte.jpg')" class="bg-primary text-white w-9 h-9 rounded-full flex items-center justify-center hover:bg-secondary transition-colors"><span class="material-symbols-outlined text-[18px]">add</span></button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Tea & Matcha -->
+      <div class="mb-16" id="section-tea">
+        <h2 class="font-headline-lg text-headline-lg text-primary mb-2">Tea & Matcha</h2>
+        <p class="text-on-surface-variant mb-10">Ceremonial-grade matcha and rare single-estate teas brewed to order.</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+          <div class="menu-card fade-up" data-category="tea">
+            <div class="img-wrap"><img src="https://images.unsplash.com/photo-1515823662972-da6a2e4d3002?w=400&q=80" alt="Ceremonial Matcha Latte"/></div>
+            <div class="p-5">
+              <div class="flex gap-2 mb-2"><span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full text-[11px] font-semibold">Earthy</span><span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full text-[11px] font-semibold">Vibrant</span></div>
+              <h3 class="font-bold text-primary text-base mb-1">Ceremonial Matcha Latte</h3>
+              <p class="text-on-surface-variant text-sm mb-4 leading-relaxed">Uji ceremonial matcha whisked with oat milk foam — calming and rich.</p>
+              <div class="flex justify-between items-center">
+                <span class="font-bold text-primary text-lg">LKR 1,100</span>
+                <button onclick="addToCartQuick('Ceremonial Matcha Latte','LKR 1,100',1100,'https://images.unsplash.com/photo-1515823662972-da6a2e4d3002?w=120&q=70')" class="bg-primary text-white w-9 h-9 rounded-full flex items-center justify-center hover:bg-secondary transition-colors"><span class="material-symbols-outlined text-[18px]">add</span></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="menu-card fade-up fade-up-delay-1" data-category="tea">
+            <div class="img-wrap"><img src="https://images.unsplash.com/photo-1571934811356-5cc061b6821f?w=400&q=80" alt="Darjeeling First Flush"/></div>
+            <div class="p-5">
+              <div class="flex gap-2 mb-2"><span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full text-[11px] font-semibold">Floral</span><span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full text-[11px] font-semibold">Delicate</span></div>
+              <h3 class="font-bold text-primary text-base mb-1">Darjeeling First Flush</h3>
+              <p class="text-on-surface-variant text-sm mb-4 leading-relaxed">Single-estate spring harvest Darjeeling, brewed at 185°F for 3 minutes.</p>
+              <div class="flex justify-between items-center">
+                <span class="font-bold text-primary text-lg">LKR 960</span>
+                <button onclick="addToCartQuick('Darjeeling First Flush','LKR 960',960,'https://images.unsplash.com/photo-1571934811356-5cc061b6821f?w=120&q=70')" class="bg-primary text-white w-9 h-9 rounded-full flex items-center justify-center hover:bg-secondary transition-colors"><span class="material-symbols-outlined text-[18px]">add</span></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="menu-card fade-up fade-up-delay-2" data-category="tea seasonal">
+            <div class="img-wrap"><img src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=400&q=80" alt="Iced Hojicha Latte"/></div>
+            <div class="p-5">
+              <div class="flex gap-2 mb-2"><span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full text-[11px] font-semibold">Toasty</span><span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full text-[11px] font-semibold">Seasonal</span></div>
+              <h3 class="font-bold text-primary text-base mb-1">Iced Hojicha Latte</h3>
+              <p class="text-on-surface-variant text-sm mb-4 leading-relaxed">Roasted Japanese green tea over ice with silky oat milk — low caffeine.</p>
+              <div class="flex justify-between items-center">
+                <span class="font-bold text-primary text-lg">LKR 1,060</span>
+                <button onclick="addToCartQuick('Iced Hojicha Latte','LKR 1,060',1060,'https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=120&q=70')" class="bg-primary text-white w-9 h-9 rounded-full flex items-center justify-center hover:bg-secondary transition-colors"><span class="material-symbols-outlined text-[18px]">add</span></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="menu-card fade-up fade-up-delay-3" data-category="tea">
+            <div class="img-wrap"><img src="assets/menu/london latte.jpg" alt="London Fog"/></div>
+            <div class="p-5">
+              <div class="flex gap-2 mb-2"><span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full text-[11px] font-semibold">Cozy</span><span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full text-[11px] font-semibold">Vanilla</span></div>
+              <h3 class="font-bold text-primary text-base mb-1">London Fog Latte</h3>
+              <p class="text-on-surface-variant text-sm mb-4 leading-relaxed">Earl Grey steeped in steamed milk with vanilla and lavender notes.</p>
+              <div class="flex justify-between items-center">
+                <span class="font-bold text-primary text-lg">LKR 1,020</span>
+                <button onclick="addToCartQuick('London Fog Latte','LKR 1,020',1020,'assets/menu/london latte.jpg')" class="bg-primary text-white w-9 h-9 rounded-full flex items-center justify-center hover:bg-secondary transition-colors"><span class="material-symbols-outlined text-[18px]">add</span></button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Pastries -->
+      <div class="mb-16" id="section-pastry">
+        <h2 class="font-headline-lg text-headline-lg text-primary mb-2">Artisan Pastries</h2>
+        <p class="text-on-surface-variant mb-10">Baked fresh each morning by our in-house pastry team. Best enjoyed warm.</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+          <div class="menu-card fade-up" data-category="pastry">
+            <div class="img-wrap"><img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=400&q=80" alt="Butter Croissant"/></div>
+            <div class="p-5">
+              <div class="flex gap-2 mb-2"><span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full text-[11px] font-semibold">Flaky</span><span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full text-[11px] font-semibold">Buttery</span></div>
+              <h3 class="font-bold text-primary text-base mb-1">Artisanal Butter Croissant</h3>
+              <p class="text-on-surface-variant text-sm mb-4 leading-relaxed">Classic French multi-layer pastry, baked daily and served warm.</p>
+              <div class="flex justify-between items-center">
+                <span class="font-bold text-primary text-lg">LKR 780</span>
+                <button onclick="addToCartQuick('Butter Croissant','LKR 780',780,'https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=120&q=70')" class="bg-primary text-white w-9 h-9 rounded-full flex items-center justify-center hover:bg-secondary transition-colors"><span class="material-symbols-outlined text-[18px]">add</span></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="menu-card fade-up fade-up-delay-1" data-category="pastry">
+            <div class="img-wrap"><img src="assets/menu/pie.jpg" alt="Almond Tart"/></div>
+            <div class="p-5">
+              <div class="flex gap-2 mb-2"><span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full text-[11px] font-semibold">Nutty</span><span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full text-[11px] font-semibold">Sweet</span></div>
+              <h3 class="font-bold text-primary text-base mb-1">Almond Frangipane Tart</h3>
+              <p class="text-on-surface-variant text-sm mb-4 leading-relaxed">Buttery tart shell filled with house almond cream and toasted flakes.</p>
+              <div class="flex justify-between items-center">
+                <span class="font-bold text-primary text-lg">LKR 900</span>
+                <button onclick="addToCartQuick('Almond Frangipane Tart','LKR 900',900,'assets/menu/pie.jpg')" class="bg-primary text-white w-9 h-9 rounded-full flex items-center justify-center hover:bg-secondary transition-colors"><span class="material-symbols-outlined text-[18px]">add</span></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="menu-card fade-up fade-up-delay-2" data-category="pastry seasonal">
+            <div class="img-wrap"><img src="assets/menu/Cardamom bun .jpg" alt="Cardamom Roll"/></div>
+            <div class="p-5">
+              <div class="flex gap-2 mb-2"><span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full text-[11px] font-semibold">Spiced</span><span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full text-[11px] font-semibold">Seasonal</span></div>
+              <h3 class="font-bold text-primary text-base mb-1">Cardamom Honey Roll</h3>
+              <p class="text-on-surface-variant text-sm mb-4 leading-relaxed">Soft-baked roll with cardamom butter filling and wildflower honey glaze.</p>
+              <div class="flex justify-between items-center">
+                <span class="font-bold text-primary text-lg">LKR 840</span>
+                <button onclick="addToCartQuick('Cardamom Honey Roll','LKR 840',840,'assets/menu/Cardamom bun .jpg')" class="bg-primary text-white w-9 h-9 rounded-full flex items-center justify-center hover:bg-secondary transition-colors"><span class="material-symbols-outlined text-[18px]">add</span></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="menu-card fade-up fade-up-delay-3" data-category="pastry">
+            <div class="img-wrap"><img src="https://images.unsplash.com/photo-1608198093002-ad4e005484ec?w=400&q=80" alt="Dark Chocolate Brownie"/></div>
+            <div class="p-5">
+              <div class="flex gap-2 mb-2"><span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full text-[11px] font-semibold">Fudgy</span><span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full text-[11px] font-semibold">Rich</span></div>
+              <h3 class="font-bold text-primary text-base mb-1">Dark Chocolate Brownie</h3>
+              <p class="text-on-surface-variant text-sm mb-4 leading-relaxed">70% Valrhona chocolate brownie with sea salt flakes and walnut pieces.</p>
+              <div class="flex justify-between items-center">
+                <span class="font-bold text-primary text-lg">LKR 760</span>
+                <button onclick="addToCartQuick('Dark Chocolate Brownie','LKR 760',760,'https://images.unsplash.com/photo-1608198093002-ad4e005484ec?w=120&q=70')" class="bg-primary text-white w-9 h-9 rounded-full flex items-center justify-center hover:bg-secondary transition-colors"><span class="material-symbols-outlined text-[18px]">add</span></button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Seasonal -->
+      <div id="section-seasonal">
+        <div class="flex items-center gap-4 mb-2">
+          <h2 class="font-headline-lg text-headline-lg text-primary">Seasonal Specials</h2>
+          <span class="bg-secondary text-white px-3 py-1 rounded-full text-xs font-bold">Limited</span>
+        </div>
+        <p class="text-on-surface-variant mb-10">Limited-time offerings celebrating the best flavors of the current season.</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+          <div class="menu-card fade-up" data-category="seasonal espresso">
+            <div class="img-wrap"><img src="https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=400&q=80" alt="Rose Lavender Latte"/></div>
+            <div class="p-5">
+              <div class="flex gap-2 mb-2"><span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full text-[11px] font-semibold">Floral</span><span class="bg-primary text-white px-2 py-0.5 rounded-full text-[11px] font-semibold">Limited</span></div>
+              <h3 class="font-bold text-primary text-base mb-1">Rose Lavender Latte</h3>
+              <p class="text-on-surface-variant text-sm mb-4 leading-relaxed">Espresso with house rose syrup, lavender honey and steamed oat milk.</p>
+              <div class="flex justify-between items-center">
+                <span class="font-bold text-primary text-lg">LKR 1,200</span>
+                <button onclick="addToCartQuick('Rose Lavender Latte','LKR 1,200',1200,'https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=120&q=70')" class="bg-primary text-white w-9 h-9 rounded-full flex items-center justify-center hover:bg-secondary transition-colors"><span class="material-symbols-outlined text-[18px]">add</span></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="menu-card fade-up fade-up-delay-1" data-category="seasonal cold">
+            <div class="img-wrap"><img src="https://images.unsplash.com/photo-1553361371-9b22f78e8b1d?w=400&q=80" alt="Brown Sugar Oat Shaken Espresso"/></div>
+            <div class="p-5">
+              <div class="flex gap-2 mb-2"><span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full text-[11px] font-semibold">Caramel</span><span class="bg-primary text-white px-2 py-0.5 rounded-full text-[11px] font-semibold">Limited</span></div>
+              <h3 class="font-bold text-primary text-base mb-1">Brown Sugar Shaken Espresso</h3>
+              <p class="text-on-surface-variant text-sm mb-4 leading-relaxed">Shaken espresso with brown sugar oat milk over clear ice — refreshing.</p>
+              <div class="flex justify-between items-center">
+                <span class="font-bold text-primary text-lg">LKR 1,240</span>
+                <button onclick="addToCartQuick('Brown Sugar Shaken Espresso','LKR 1,240',1240,'https://images.unsplash.com/photo-1553361371-9b22f78e8b1d?w=120&q=70')" class="bg-primary text-white w-9 h-9 rounded-full flex items-center justify-center hover:bg-secondary transition-colors"><span class="material-symbols-outlined text-[18px]">add</span></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="menu-card fade-up fade-up-delay-2" data-category="seasonal pastry">
+            <div class="img-wrap"><img src="assets/menu/bunroll.jpg" alt="Cardamom Roll"/></div>
+            <div class="p-5">
+              <div class="flex gap-2 mb-2"><span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full text-[11px] font-semibold">Spiced</span><span class="bg-primary text-white px-2 py-0.5 rounded-full text-[11px] font-semibold">Limited</span></div>
+              <h3 class="font-bold text-primary text-base mb-1">Cardamom Honey Roll</h3>
+              <p class="text-on-surface-variant text-sm mb-4 leading-relaxed">Soft-baked roll with cardamom butter filling and wildflower honey glaze.</p>
+              <div class="flex justify-between items-center">
+                <span class="font-bold text-primary text-lg">$4.20</span>
+                <button onclick="addToCartQuick('Cardamom Honey Roll','$4.20',4.20,'assets/menu/bunroll.jpg')" class="bg-primary text-white w-9 h-9 rounded-full flex items-center justify-center hover:bg-secondary transition-colors"><span class="material-symbols-outlined text-[18px]">add</span></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="menu-card fade-up fade-up-delay-3" data-category="seasonal tea">
+            <div class="img-wrap"><img src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=400&q=80" alt="Iced Hojicha Latte"/></div>
+            <div class="p-5">
+              <div class="flex gap-2 mb-2"><span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full text-[11px] font-semibold">Toasty</span><span class="bg-primary text-white px-2 py-0.5 rounded-full text-[11px] font-semibold">Limited</span></div>
+              <h3 class="font-bold text-primary text-base mb-1">Iced Hojicha Latte</h3>
+              <p class="text-on-surface-variant text-sm mb-4 leading-relaxed">Roasted Japanese green tea over ice with silky oat milk — low caffeine.</p>
+              <div class="flex justify-between items-center">
+                <span class="font-bold text-primary text-lg">LKR 1,060</span>
+                <button onclick="addToCartQuick('Iced Hojicha Latte','LKR 1,060',1060,'https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=120&q=70')" class="bg-primary text-white w-9 h-9 rounded-full flex items-center justify-center hover:bg-secondary transition-colors"><span class="material-symbols-outlined text-[18px]">add</span></button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-tertiary-container text-on-tertiary-container py-12 px-margin-mobile md:px-margin-desktop w-full mt-16 border-t border-primary/10">
+    <div class="max-w-[1440px] mx-auto flex flex-col items-center gap-8">
+      <div class="flex items-center gap-3"><span class="material-symbols-outlined text-secondary">coffee</span><span class="font-headline-md text-white">Brew Heaven</span></div>
+      <nav class="flex flex-wrap justify-center gap-8"><a class="text-white/70 hover:text-white text-sm transition-colors" href="index.html">Home</a><a class="text-white/70 hover:text-white text-sm transition-colors" href="about.html">About</a><a class="text-white/70 hover:text-white text-sm transition-colors" href="careers.html">Careers</a><a class="text-white/70 hover:text-white text-sm transition-colors" href="contact.html">Contact</a></nav>
+      <p class="text-white/30 text-sm">© 2026 Brew Heaven. Crafted for the slow-living coffee enthusiast.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
